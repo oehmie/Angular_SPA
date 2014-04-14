@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - Meine ASP.NET MVC-Anwendung</title>
+    <title ng-bind="$state.current.name + ' - app-Name'">ui-router</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     @Scripts.Render("~/scripts/vendor")
@@ -14,34 +14,55 @@
 </head>
 <body ng-app='app'>
 
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <!-- ui-sref is a great directive for linking a state location with an anchor link.
                 You should almost always use ui-sref instead of href on your links when you want
                 then to navigate to a state. When this link is clicked it will take the application
                 to the 'home' state. Behind the scenes the directive also adds the correct href attr
                 and url. -->
-                <a class="navbar-brand" ui-sref="home">ui-router</a>
+                <a class="navbar-brand" ui-sref="home">App-Name</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{active: $state.includes('contact')}"><a ui-sref="contact">Contacts</a></li>
+                    <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
                     <li ui-sref-active="active"><a ui-sref="about">About</a></li>
+                    <li ui-sref-active="active"><a ui-sref="contact">Contacts</a></li>
                 </ul>
             </div>
-
-            <!-- Here is a named ui-view. ui-views don't have to be named, but we'll be populate this
-            on from various different child states and we want a name to help us target. -->
-            <p ui-view="hint" class="navbar-text pull-right"></p>
         </div>
     </nav>
+    <!-- Here is a named ui-view. ui-views don't have to be named, but we'll be populate this
+            on from various different child states and we want a name to help us target. -->
+    <p ui-view="hint" class="navbar-text pull-right"></p>
 
+    <div class="container slide" ui-view></div>
 
-    <div class="container" ui-view></div>
+    <hr>
+    <pre>
+      <!-- Here's some values to keep an eye on in the sample in order to understand $state and $stateParams -->
+      $state = {{$state.current.name}}
+      $stateParams = {{$stateParams}}
+      $state full url = {{ $state.$current.url.source }}
+      <!-- $state.$current is not a public api, we are using it to
+           display the full url for learning purposes-->
+    </pre>
+    <script>
+        $('.nav a').on('click', function () {
+            $(".btn-navbar").click();
+        });
+    </script>    
 </body>
+
+
 </html>
 
