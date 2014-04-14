@@ -1,8 +1,6 @@
 ﻿@{
     Layout = null;
 }
-
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -11,22 +9,39 @@
     <title>@ViewBag.Title - Meine ASP.NET MVC-Anwendung</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
+    @Scripts.Render("~/scripts/vendor")
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
 </head>
 <body ng-app='app'>
-    <div ng-include="'/app/navbar/navbar.html'" ng-controller="Navbar" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    </div>
-    <div class="container" ng-view>
-        Inhalt
-    </div>
-    <div class="container">
-        <hr>
-        <footer>
-            <p>&copy; Company 2014</p>
-        </footer>
-    </div> <!-- /container -->
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+
+                <!-- ui-sref is a great directive for linking a state location with an anchor link.
+                You should almost always use ui-sref instead of href on your links when you want
+                then to navigate to a state. When this link is clicked it will take the application
+                to the 'home' state. Behind the scenes the directive also adds the correct href attr
+                and url. -->
+                <a class="navbar-brand" ui-sref="home">ui-router</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{active: $state.includes('contact')}"><a ui-sref="contact">Contacts</a></li>
+                    <li ui-sref-active="active"><a ui-sref="about">About</a></li>
+                </ul>
+            </div>
+
+            <!-- Here is a named ui-view. ui-views don't have to be named, but we'll be populate this
+            on from various different child states and we want a name to help us target. -->
+            <p ui-view="hint" class="navbar-text pull-right"></p>
+        </div>
+    </nav>
+
+
+    <div class="container" ui-view></div>
 </body>
 </html>
 

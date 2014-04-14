@@ -17,18 +17,19 @@ namespace Angular_SPA
 
             bundles.Add(
               new ScriptBundle("~/scripts/vendor")
-                .Include("~/app/app.js")
-                .Include("~/app/app.routes.js")
+                //.Include("~/app/app.routes.js")
                 .Include("~/scripts/jquery-{version}.js")
                 .Include("~/scripts/angular.js")
-                .Include("~/scripts/angular.ui.router.js")
+                .Include("~/scripts/angular-ui-router.js")
                 //.Include("~/scripts/knockout-{version}.debug.js")
                 //.Include("~/scripts/sammy-{version}.js")
                 //.Include("~/scripts/toastr-{version}.js")
                 //.Include("~/scripts/Q.js")
                 .Include("~/scripts/bootstrap.js")
                 .Include("~/scripts/moment.js")
-              );
+                .Include("~/app/app.js")
+                .Include("~/app/home/home.js")
+                );
 
             bundles.Add(
               new StyleBundle("~/Content/css")
@@ -36,7 +37,7 @@ namespace Angular_SPA
                 .Include("~/Content/bootstrap.css")
                 .Include("~/Content/bootstrap-responsive.css")
                 //.Include("~/Content/toastr.css")
-                //.Include("~/Content/app.css")
+                .Include("~/Content/app.css")
               );
         }
 

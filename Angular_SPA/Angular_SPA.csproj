@@ -105,13 +105,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
-    <Content Include="App\app.routes.js" />
+    <Content Include="App\Home\Contact.html" />
     <Content Include="App\Home\Home.html" />
-    <Content Include="App\Home\Home.js" />
+    <Content Include="App\Home\About.html" />
     <Content Include="App\Navbar\Navbar.html" />
     <Content Include="App\Navbar\Navbar.js" />
     <Content Include="App\Search\Results.html" />
     <Content Include="App\Search\Results.js" />
+    <Content Include="Content\app.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
