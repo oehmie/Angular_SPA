@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <title ng-bind="$state.current.name + ' - app-Name'">ui-router</title>
+    <title ng-bind="$state.current.name + ' - app-Name'"></title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     @Scripts.Render("~/scripts/vendor")
@@ -37,6 +37,7 @@
                     <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
                     <li ui-sref-active="active"><a ui-sref="about">About</a></li>
                     <li ui-sref-active="active"><a ui-sref="contact">Contacts</a></li>
+                    <li ui-sref-active="active"><a ui-sref="kooperationspartner">Kooperationspartner</a></li>
                 </ul>
             </div>
         </div>
@@ -57,8 +58,11 @@
            display the full url for learning purposes-->
     </pre>
     <script>
-        $('.nav a').on('click', function () {
-            $(".btn-navbar").click();
+        //Nav-Bar schliessen bei Klick auf eine Link im Menu
+        $(document).on('click', '.navbar-collapse.in', function (e) {
+            if ($(e.target).is('a')) {
+                $(this).collapse('hide');
+            }
         });
     </script>    
 </body>

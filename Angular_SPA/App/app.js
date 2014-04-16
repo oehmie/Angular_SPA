@@ -19,6 +19,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       .state('contact', {
             url: "/contact",
             templateUrl: "/app/home/contact.html",
+      })
+      .state('kooperationspartner', {
+            url: "/kooperationspartner",
+            templateUrl: "/app/home/kooperationspartner.html",
         })
       .state('state2', {
           url: "/state2",

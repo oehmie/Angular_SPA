@@ -108,6 +108,10 @@
     <Content Include="App\Home\Contact.html" />
     <Content Include="App\Home\Home.html" />
     <Content Include="App\Home\About.html" />
+    <Content Include="App\Home\Home-Controller.js" />
+    <Content Include="App\Home\Kooperationspartner-Controller.js" />
+    <Content Include="App\Home\Kooperationspartner-Service.js" />
+    <Content Include="App\Home\Kooperationspartner.html" />
     <Content Include="App\Navbar\Navbar.html" />
     <Content Include="App\Navbar\Navbar.js" />
     <Content Include="App\Search\Results.html" />
@@ -416,6 +420,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\KooperationspartnerController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

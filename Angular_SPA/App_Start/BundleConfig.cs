@@ -27,7 +27,8 @@ namespace Angular_SPA
                 .Include("~/scripts/bootstrap.js")
                 //.Include("~/scripts/moment.js")
                 .Include("~/app/app.js")
-                //.Include("~/app/home/homecontroller.js")
+                .Include("~/app/home/*-controller.js")
+                .Include("~/app/home/*-service.js")
                 );
 
             bundles.Add(
