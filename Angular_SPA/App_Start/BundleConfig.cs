@@ -35,7 +35,6 @@ namespace Angular_SPA
               new StyleBundle("~/Content/css")
                 .Include("~/Content/ie10mobile.css")
                 .Include("~/Content/bootstrap.css")
-                .Include("~/Content/bootstrap-responsive.css")
                 //.Include("~/Content/toastr.css")
                 .Include("~/Content/app.css")
               );

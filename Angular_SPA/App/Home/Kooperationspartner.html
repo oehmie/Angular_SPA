@@ -1,0 +1,30 @@
+﻿<div class="row">
+    <h2>Kooperationspartner</h2>
+    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+
+    <div ng-controller="KooperationspartnerController">
+        <table class="table table-striped table-hover"
+               style="width: 500px;">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="kp in kooperationspartner">
+                    <td>
+                        {{ kp }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

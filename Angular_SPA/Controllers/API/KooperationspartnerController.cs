@@ -14,7 +14,7 @@ namespace Angular_SPA.Controllers.API
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "Ende der Liste" };
         }
 
         // GET api/<controller>/5
