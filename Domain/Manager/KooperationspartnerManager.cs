@@ -13,7 +13,7 @@ namespace Angular_SPA.Domain.Manager {
 
       KooperationspartnerDataManager kooperationspartnerDataManager = new KooperationspartnerDataManager(false);
 
-      public void Dispose() {
+      public void Dispose() { 
          kooperationspartnerDataManager.Dispose();
       }
 

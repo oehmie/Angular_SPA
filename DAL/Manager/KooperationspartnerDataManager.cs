@@ -20,7 +20,7 @@ namespace Angular_SPA.DAL.Manager {
       /// </summary>
       internal KooperationspartnerDataManager(bool preloading = true, bool lazyLoading = false, bool tracking = false, FactoringContext context = null) {
          Init(lazyLoading, tracking, context);
-         // Preloading lÃ¤dt alle Piloten in den Kontext-Cache
+         // Preloading lädt alle Kooperationspartner in den Kontext-Cache
          if (preloading) {
             this.preloading = true;
             context.KooperationspartnerSet.ToList();
@@ -29,6 +29,7 @@ namespace Angular_SPA.DAL.Manager {
 
       public List<Kooperationspartner> GetKooperationspartner() {
          return (from k in context.KooperationspartnerSet select k).ToList();
+          //return context.KooperationspartnerSet.ToList();
       }
 
 
