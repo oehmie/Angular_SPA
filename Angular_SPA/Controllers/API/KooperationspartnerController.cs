@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Angular_SPA.Domain.Manager;
+using Angular_SPA.Domain.Models;
 
 namespace Angular_SPA.Controllers.API
 {
@@ -12,9 +14,11 @@ namespace Angular_SPA.Controllers.API
 
 
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        public List<Kooperationspartner> Get()
         {
-            return new string[] { "value1", "value2", "Ende der Liste" };
+           KooperationspartnerManager manager = new KooperationspartnerManager();
+           return manager.GetKooperationspartner();
+           //return new string[] { "value1", "value2", "Ende der Liste" };
         }
 
         // GET api/<controller>/5
