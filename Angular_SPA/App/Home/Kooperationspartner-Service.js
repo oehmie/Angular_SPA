@@ -4,6 +4,8 @@
         $http({
             method: 'GET',
             url: 'api/kooperationspartner'
+            //params : {page:1, pagesize:5}
+            //params : {skip:1, take:5, sort:'test1',filter:'test2'}
         }).
          success(function (data, status, headers, config) {
              deferred.resolve(data)
