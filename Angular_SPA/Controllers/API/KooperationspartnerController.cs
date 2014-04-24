@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Angular_SPA.Classes;
 using Angular_SPA.Domain.Manager;
 using Angular_SPA.Domain.Models;
+using Domain.Classes;
 
 namespace Angular_SPA.Controllers.API {
 
@@ -35,10 +35,16 @@ namespace Angular_SPA.Controllers.API {
       //}
 
       [HttpGet]
-      public List<Kooperationspartner> Get([FromUri] PagedRequest request) {
-         
-         KooperationspartnerManager manager = new KooperationspartnerManager();
-         return manager.GetKooperationspartner();
+      public ApiResult<PagedResponse<Kooperationspartner>> Get([FromUri] PagedRequest request) {
+         try {
+            //throw new Exception("Hat nicht geklappt");
+            KooperationspartnerManager manager = new KooperationspartnerManager();
+            PagedResponse<Kooperationspartner> data = manager.GetKooperationspartner(request);
+            return new ApiResult<PagedResponse<Kooperationspartner>>(data, true);
+         }
+         catch (Exception ex) {
+            return new ApiResult<PagedResponse<Kooperationspartner>>(null, false, ex.Message);
+         }
       }
 
       //// GET api/<controller>/5

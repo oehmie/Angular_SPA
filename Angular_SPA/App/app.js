@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('app', ['ui.router']);
+var app = angular.module('app', ['ui.router','ngGrid']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //

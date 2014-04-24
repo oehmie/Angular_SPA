@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ApiResult.cs" />
+    <Compile Include="Classes\PagedRequest.cs" />
+    <Compile Include="Classes\PagedResponse.cs" />
     <Compile Include="Manager\KooperationspartnerManager.cs" />
     <Compile Include="Models\Kooperationspartner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -27,8 +27,8 @@ namespace Angular_SPA.DAL.Manager {
          }
       }
 
-      public List<Kooperationspartner> GetKooperationspartner() {
-         return (from k in context.KooperationspartnerSet select k).ToList();
+      public IQueryable<Kooperationspartner> GetKooperationspartner() {
+         return (from k in context.KooperationspartnerSet select k);
           //return context.KooperationspartnerSet.ToList();
       }
 
