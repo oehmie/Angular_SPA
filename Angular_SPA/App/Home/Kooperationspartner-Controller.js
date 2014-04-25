@@ -1,15 +1,26 @@
 ﻿
 
-app.controller('KooperationspartnerController',  ["$scope", "$http", "$q", "$stateParams", "$state", "kooperationspartnerService",
+app.controller('kooperationspartnerController',
     function ($scope, $http, $q, $stateParams, $state, kooperationspartnerService) {
         //Perform the initialization
+
+        
+        $scope.totalServerItems = 0;
+        $scope.success = true;
+
+        $scope.pagedResult = {
+            Success: false,
+            ErrorMessage : 'Fehler',
+            Result : {
+                Data : [],
+                TotalRows : 0
+            }                 
+        };
 
         $scope.filterOptions = {
             filterText: "",
             useExternalFilter: true
         };
-
-        $scope.totalServerItems = 0;
 
         $scope.pagingOptions = {
             pageSizes: [5, 10, 20],
@@ -17,15 +28,22 @@ app.controller('KooperationspartnerController',  ["$scope", "$http", "$q", "$sta
             currentPage: 1
         };
 
+        $scope.gridOptions = {
+            data: 'pagedResult.Result.Data',
+            enablePaging: true,
+            showFooter: true,
+            totalServerItems: 'pagedResult.Result.TotalRows',
+            pagingOptions: $scope.pagingOptions,
+            filterOptions: $scope.filterOptions
+        };
 
+        
 
         $scope.setPagingData = function (data) {
             if (data.Success) {
-                $scope.myData = data.Result.Data;
-                $scope.totalServerItems = data.Result.TotalRows;
+                
             }
-            $scope.success = data.Success;
-            $scope.errorMessage = data.ErrorMessage;
+            $scope.pagedResult = data;
 
             if (!$scope.$$phase) {
                 $scope.$apply();
@@ -33,13 +51,12 @@ app.controller('KooperationspartnerController',  ["$scope", "$http", "$q", "$sta
         };
 
         $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            setTimeout(function () {
-                var data;
+            //setTimeout(function () {
                 if (searchText) {
                     var ft = searchText.toLowerCase();
                     var request = {
-                        pageSize : $scope.pagingOptions.pageSize,
-                        currentPage : $scope.pagingOptions.currentPage
+                        pageSize: $scope.pagingOptions.pageSize,
+                        currentPage: $scope.pagingOptions.currentPage
                     };
                     kooperationspartnerService.getKooperationspartner(request)
                     .then(function (data) {
@@ -61,13 +78,15 @@ app.controller('KooperationspartnerController',  ["$scope", "$http", "$q", "$sta
                         $scope.setPagingData(data);
                     });
                 }
-            }, 100);
+            //}, 100);
         };
-	
+
         $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-	
+
         $scope.$watch('pagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
+                if (newVal.pageSize !== oldVal.pageSize)
+                    $scope.pagingOptions.currentPage = 1;
                 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
             }
         }, true);
@@ -77,16 +96,8 @@ app.controller('KooperationspartnerController',  ["$scope", "$http", "$q", "$sta
                 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
             }
         }, true);
-	
-        $scope.gridOptions = {
-            data: 'myData',
-            enablePaging: true,
-            showFooter: true,
-            totalServerItems:'totalServerItems',
-            pagingOptions: $scope.pagingOptions,
-            filterOptions: $scope.filterOptions
-        };
 
-        $scope.success = true;
-        $scope.totalServerItems = 0;
-    }]);
+        
+        
+
+    });

@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
+    <Content Include="App\Home\Contact-Controller.js" />
     <Content Include="App\Home\Contact.html" />
     <Content Include="App\Home\Home.html" />
     <Content Include="App\Home\About.html" />

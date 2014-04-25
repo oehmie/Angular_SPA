@@ -1,8 +1,8 @@
 ﻿
-app.controller("HomeController", ["$scope", "$http", "$q", "$stateParams", "$state",
+app.controller("homeController",
     function ($scope, $http, $q, $stateParams, $state) {
 
-        $scope.text = "Text";
+        $scope.text = "Herzlich willkommen";
 
-    }]);
+    });
 

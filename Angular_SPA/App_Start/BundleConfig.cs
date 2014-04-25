@@ -17,6 +17,7 @@ namespace Angular_SPA
 
             bundles.Add(
               new ScriptBundle("~/scripts/vendor")
+                .Include("~/scripts/bootstrap.js")
                 .Include("~/scripts/jquery-{version}.js")
                 .Include("~/scripts/angular.js")
                 .Include("~/scripts/angular-ui-router.js")
@@ -25,11 +26,11 @@ namespace Angular_SPA
                 //.Include("~/scripts/sammy-{version}.js")
                 //.Include("~/scripts/toastr-{version}.js")
                 //.Include("~/scripts/Q.js")
-                .Include("~/scripts/bootstrap.js")
                 //.Include("~/scripts/moment.js")
                 .Include("~/app/app.js")
                 .Include("~/app/home/*-controller.js")
                 .Include("~/app/home/*-service.js")
+                
                 );
 
             bundles.Add(

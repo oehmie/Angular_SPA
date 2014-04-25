@@ -1,5 +1,8 @@
-﻿app.service('kooperationspartnerService', function ($http, $q) {
-    this.getKooperationspartner = function (request) {
+﻿app.factory('kooperationspartnerService', function ($http, $q) {
+
+    var factory = [];
+
+    factory.getKooperationspartner = function (request) {
         var deferred = $q.defer();
         $http({
             method: 'GET',
@@ -17,4 +20,6 @@
 
         return deferred.promise;
     }
+
+    return factory;
 });

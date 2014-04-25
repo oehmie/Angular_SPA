@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('app', ['ui.router','ngGrid']);
+var app = angular.module('app', ['ui.router', 'ngGrid']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //
@@ -14,26 +14,15 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       })
       .state('about', {
           url: "/about",
-          templateUrl: "/app/home/about.html",
+          templateUrl: "/app/home/about.html"
       })
       .state('contact', {
-            url: "/contact",
-            templateUrl: "/app/home/contact.html",
+          url: "/contact",
+          templateUrl: "/app/home/contact.html"
       })
       .state('kooperationspartner', {
-            url: "/kooperationspartner",
-            templateUrl: "/app/home/kooperationspartner.html",
-        })
-      .state('state2', {
-          url: "/state2",
-          templateUrl: "partials/state2.html"
-      })
-      .state('state2.list', {
-          url: "/list",
-          templateUrl: "partials/state2.list.html",
-          controller: function ($scope) {
-              $scope.things = ["A", "Set", "Of", "Things"];
-          }
+          url: "/kooperationspartner",
+          templateUrl: "/app/home/kooperationspartner.html",
       })
 });
 
