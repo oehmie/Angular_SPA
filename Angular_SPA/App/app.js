@@ -23,6 +23,24 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       .state('kooperationspartner', {
           url: "/kooperationspartner",
           templateUrl: "/app/home/kooperationspartner.html",
-      })
+
+      });
+
+
 });
+
+app.run(function ($rootScope, $state) {
+    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+        //if (fromState.name == 'kooperationspartner') {
+        //    angular.element('[ng-controller=kooperationspartnerController]').remove();
+        //}
+          //if (toState.authenticate && !AuthService.isAuthenticated()) {
+          //    // User isn’t authenticated
+          //    $state.transitionTo("login");
+          //    event.preventDefault();
+          //}
+      });
+  });
+
+
 

@@ -28,13 +28,27 @@ app.controller('kooperationspartnerController',
             currentPage: 1
         };
 
+        $scope.sortOptions = {
+            fields: [],
+            directions: []
+        };
+
         $scope.gridOptions = {
             data: 'pagedResult.Result.Data',
             enablePaging: true,
             showFooter: true,
             totalServerItems: 'pagedResult.Result.TotalRows',
             pagingOptions: $scope.pagingOptions,
-            filterOptions: $scope.filterOptions
+            filterOptions: $scope.filterOptions,
+            sortInfo: $scope.sortOptions,
+            enableCellSelection: false,
+            enableRowSelection: false,
+            enableCellEditOnFocus: false,
+            showFilter: false,
+            showColumnMenu: false,
+            useExternalSorting: true,
+            i18n: "de"
+
         };
 
         
@@ -56,7 +70,8 @@ app.controller('kooperationspartnerController',
                     var ft = searchText.toLowerCase();
                     var request = {
                         pageSize: $scope.pagingOptions.pageSize,
-                        currentPage: $scope.pagingOptions.currentPage
+                        currentPage: $scope.pagingOptions.currentPage,
+                        sortInfo: $scope.sortInfo
                     };
                     kooperationspartnerService.getKooperationspartner(request)
                     .then(function (data) {
@@ -68,7 +83,10 @@ app.controller('kooperationspartnerController',
                 } else {
                     var request = {
                         pageSize: $scope.pagingOptions.pageSize,
-                        currentPage: $scope.pagingOptions.currentPage
+                        currentPage: $scope.pagingOptions.currentPage,
+                        sortFields: $scope.sortOptions.fields,
+                        sortDirections: $scope.sortOptions.directions
+
                     };
                     kooperationspartnerService.getKooperationspartner(request)
                     .then(function (data) {
@@ -97,7 +115,12 @@ app.controller('kooperationspartnerController',
             }
         }, true);
 
-        
+        $scope.$watch('sortOptions', function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
+            }
+        }, true);
+
         
 
     });
