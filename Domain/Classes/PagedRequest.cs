@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Domain.Classes {
+namespace Angular_SPA.Domain.Classes {
    public class PagedRequest {
       public int? pageSize { get; set; }
       public int? currentPage { get; set; }

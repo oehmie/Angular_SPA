@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Angular_SPA.Domain.Manager;
 using Angular_SPA.Domain.Models;
-using Domain.Classes;
+using Angular_SPA.Domain.Classes;
 
 namespace Angular_SPA.Controllers.API {
 

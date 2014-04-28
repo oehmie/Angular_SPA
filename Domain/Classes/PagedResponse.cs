@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Domain.Classes {
+namespace Angular_SPA.Domain.Classes {
    public class PagedResponse<T> {
       public PagedResponse(IEnumerable<T> result, int totalRows) {
          Data = result;

@@ -4,17 +4,17 @@ app.controller('kooperationspartnerController',
     function ($scope, $http, $q, $stateParams, $state, kooperationspartnerService) {
         //Perform the initialization
 
-        
+
         $scope.totalServerItems = 0;
         $scope.success = true;
 
         $scope.pagedResult = {
             Success: false,
-            ErrorMessage : 'Fehler',
-            Result : {
-                Data : [],
-                TotalRows : 0
-            }                 
+            ErrorMessage: 'Fehler',
+            Result: {
+                Data: [],
+                TotalRows: 0
+            }
         };
 
         $scope.filterOptions = {
@@ -24,13 +24,13 @@ app.controller('kooperationspartnerController',
 
         $scope.pagingOptions = {
             pageSizes: [5, 10, 20],
-            pageSize: 5,
+            pageSize: 10,
             currentPage: 1
         };
 
-        $scope.sortOptions = {
-            fields: [],
-            directions: []
+        $scope.sortInfo = {
+            fields: ['name'],
+            directions: ['asc']
         };
 
         $scope.gridOptions = {
@@ -40,22 +40,22 @@ app.controller('kooperationspartnerController',
             totalServerItems: 'pagedResult.Result.TotalRows',
             pagingOptions: $scope.pagingOptions,
             filterOptions: $scope.filterOptions,
-            sortInfo: $scope.sortOptions,
+            sortInfo: $scope.sortInfo,
             enableCellSelection: false,
             enableRowSelection: false,
             enableCellEditOnFocus: false,
+            enableSorting: true,
             showFilter: false,
             showColumnMenu: false,
             useExternalSorting: true,
             i18n: "de"
-
         };
 
-        
 
-        $scope.setPagingData = function (data) {
+
+        $scope.showData = function (data) {
             if (data.Success) {
-                
+
             }
             $scope.pagedResult = data;
 
@@ -65,40 +65,27 @@ app.controller('kooperationspartnerController',
         };
 
         $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            //setTimeout(function () {
-                if (searchText) {
-                    var ft = searchText.toLowerCase();
-                    var request = {
-                        pageSize: $scope.pagingOptions.pageSize,
-                        currentPage: $scope.pagingOptions.currentPage,
-                        sortInfo: $scope.sortInfo
-                    };
-                    kooperationspartnerService.getKooperationspartner(request)
-                    .then(function (data) {
-                        $scope.setPagingData(data);
-                    }, function (error) {
-                        // error handling here
-                        $scope.setPagingData(data);
-                    });
-                } else {
-                    var request = {
-                        pageSize: $scope.pagingOptions.pageSize,
-                        currentPage: $scope.pagingOptions.currentPage,
-                        sortFields: $scope.sortOptions.fields,
-                        sortDirections: $scope.sortOptions.directions
+            setTimeout(function () {
 
-                    };
-                    kooperationspartnerService.getKooperationspartner(request)
-                    .then(function (data) {
-                        $scope.setPagingData(data);
-                    }, function (error) {
-                        // error handling here
-                        $scope.setPagingData(data);
-                    });
-                }
-            //}, 100);
+                var request = {
+                    pageSize: $scope.pagingOptions.pageSize,
+                    currentPage: $scope.pagingOptions.currentPage,
+                    sortFields: $scope.sortInfo.fields,
+                    sortDirections: $scope.sortInfo.directions,
+                    filter: $scope.filterOptions.filterText
+                };
+                kooperationspartnerService.getKooperationspartner(request)
+                .then(function (data) {
+                    $scope.showData(data);
+                }, function (error) {
+                    // error handling here
+                    $scope.showData(data);
+                });
+
+            }, 100);
         };
 
+        //Daten das erste Mal holen
         $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
         $scope.$watch('pagingOptions', function (newVal, oldVal) {
@@ -115,12 +102,12 @@ app.controller('kooperationspartnerController',
             }
         }, true);
 
-        $scope.$watch('sortOptions', function (newVal, oldVal) {
+        $scope.$watch('sortInfo', function (newVal, oldVal) {
             if (newVal !== oldVal) {
                 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
             }
         }, true);
 
-        
+
 
     });
