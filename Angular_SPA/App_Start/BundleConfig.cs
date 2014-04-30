@@ -22,6 +22,7 @@ namespace Angular_SPA
                 .Include("~/scripts/angular.js")
                 .Include("~/scripts/angular-ui-router.js")
                 .Include("~/scripts/ng-grid.js")
+                .Include("~/scripts/angular-file-upload.js")
                 //.Include("~/scripts/knockout-{version}.debug.js")
                 //.Include("~/scripts/sammy-{version}.js")
                 //.Include("~/scripts/toastr-{version}.js")
@@ -39,6 +40,7 @@ namespace Angular_SPA
                 .Include("~/Content/bootstrap.css")
                 .Include("~/Content/ng-grid.css")
                 //.Include("~/Content/toastr.css")
+                .Include("~/Content/font-awesome.css")
                 .Include("~/Content/app.css")
               );
         }

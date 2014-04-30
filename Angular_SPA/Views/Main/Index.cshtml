@@ -31,17 +31,23 @@
                 and url. -->
                 <a class="navbar-brand" ui-sref="home">App-Name</a>
             </div>
-
+            
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
                     <li ui-sref-active="active"><a ui-sref="about">About</a></li>
                     <li ui-sref-active="active"><a ui-sref="contact">Contacts</a></li>
                     <li ui-sref-active="active"><a ui-sref="kooperationspartner">Kooperationspartner</a></li>
+                    <li ui-sref-active="active"><a ui-sref="fileupload">Fileupload</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <div id="loaderDiv" loader>
+        <i class="fa fa-cog fa-spin fa-4x ajax-loader"></i>
+    </div>    
+
     <!-- Here is a named ui-view. ui-views don't have to be named, but we'll be populate this
             on from various different child states and we want a name to help us target. -->
     @*<p ui-view="hint" class="navbar-text pull-right"></p>*@

@@ -2,6 +2,8 @@
 
 app.controller('kooperationspartnerController',
     function ($scope, $http, $q, $stateParams, $state, kooperationspartnerService) {
+        'use strict';
+
         //Perform the initialization
 
 
@@ -9,8 +11,8 @@ app.controller('kooperationspartnerController',
         $scope.success = true;
 
         $scope.pagedResult = {
-            Success: false,
-            ErrorMessage: 'Fehler',
+            Success: true,
+            ErrorMessage: '',
             Result: {
                 Data: [],
                 TotalRows: 0
@@ -44,10 +46,23 @@ app.controller('kooperationspartnerController',
             enableCellSelection: false,
             enableRowSelection: false,
             enableCellEditOnFocus: false,
+            columnDefs: [{ field: 'Id', displayName: '#', sortable: true },
+                         { field: 'Name', displayName: 'Name', sortable: true },
+                         { field: 'Strasse', displayName: 'Strasse', sortable: true },
+                         { field: 'Ort', displayName: 'Ort', sortable: true },
+                         { field: 'Telefon', displayName: 'Telefon', sortable: false },
+                         { field: 'Fax', displayName: 'Fax', sortable: false },
+                         { field: 'Email', displayName: 'Email', sortable: false },
+                         { field: 'Web', displayName: 'Web', sortable: false },
+            ],
             enableSorting: true,
             showFilter: false,
             showColumnMenu: false,
             useExternalSorting: true,
+            showSelectionCheckbox: true,
+            //selectWithCheckboxOnly: true,
+            selectedItems: [],
+            primaryKey : 'Id',
             i18n: "de"
         };
 
@@ -74,6 +89,7 @@ app.controller('kooperationspartnerController',
                     sortDirections: $scope.sortInfo.directions,
                     filter: $scope.filterOptions.filterText
                 };
+                var x = $scope.gridOptions.selectedItems;
                 kooperationspartnerService.getKooperationspartner(request)
                 .then(function (data) {
                     $scope.showData(data);
@@ -86,7 +102,7 @@ app.controller('kooperationspartnerController',
         };
 
         //Daten das erste Mal holen
-        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+        //$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
         $scope.$watch('pagingOptions', function (newVal, oldVal) {
             if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
