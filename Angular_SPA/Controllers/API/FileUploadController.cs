@@ -77,7 +77,7 @@ namespace Angular_SPA.Controllers.API {
 
 
 
-      [HttpPost, Route("api/upload")]
+      [HttpPost, Route("~/api/fileupload/upload")]
       public async Task<IHttpActionResult> Upload() {
          if (!Request.Content.IsMimeMultipartContent())
             throw new Exception(); // divided by zero

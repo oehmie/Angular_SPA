@@ -8,12 +8,12 @@
         <div ng-show="uploader.isHTML5">
             <!-- 3. ng-file-over | ng-file-over="className" -->
             <div class="well my-drop-zone" ng-file-over>
-                Base drop zone
+                Dateien hier ablegen
             </div>
 
             <!-- Example: ng-file-drop | ng-file-drop="options" -->
-            <div class="well my-drop-zone" ng-file-drop="{ url: '/foo' }" ng-file-over="another-file-over-class">
-                Another drop zone with its own settings
+            <div class="well my-drop-zone" ng-file-drop="{ url: '/api/fileupload/upload' }" ng-file-over="another-file-over-class">
+                oder hier ablegen
             </div>
         </div>
 
