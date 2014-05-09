@@ -1,0 +1,40 @@
+﻿<div ng-controller="loginController">
+    <div class="row">
+        <h2 class="form-signin-heading">{{ text }}</h2>
+        <iframe src="formpost.html" name="formpost"
+                style="display:none"></iframe>
+
+        <form name="loginForm" class="form-signin col-lg-3" role="form"
+              action="formpost.html" target="formpost" method="post"
+              ng-submit="login(userForm.$valid)"
+              novalidate form-autofill-fix>
+
+            <input type="text" class="form-control" placeholder="Benutzername" required autofocus ng-model="username" ng-minlength="6" ng-maxlength="12">
+            <small class="error"
+                   ng-show="loginForm.email.$error.required">
+                das Feld Benutzername muss gefüllt sein.
+            </small>
+            <small class="error"
+                   ng-show="loginForm.email.$error.minlength">
+                Your email is required to be at least 3 characters
+            </small>
+            <small class="error"
+                   ng-show="loginForm.email.$error.email">
+                That is not a valid email. Please input a valid email.
+            </small>
+            <small class="error"
+                   ng-show="loginForm.email.$error.maxlength">
+                Your email cannot be longer than 20 characters
+            </small>
+            <input type="password" class="form-control" placeholder="Passwort" required ng-model="password" ng-minlength="6" ng-maxlength="12">
+            <label class="checkbox">
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+            <button class="btn btn-lg btn-primary" type="submit">Anmelden</button>
+
+        </form>
+    </div>
+    <div class="row">
+        <div class="alert alert-danger" ng-show="hasErrors">{{errorText}}</div>
+    </div>
+</div>

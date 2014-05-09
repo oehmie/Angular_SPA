@@ -1,4 +1,5 @@
-﻿
+﻿'use strict';
+
 app.controller("contactController",
     function ($scope, $http, $q, $stateParams, $state) {
 

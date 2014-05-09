@@ -1,4 +1,6 @@
-﻿app.factory('kooperationspartnerService', function ($http, $q) {
+﻿'use strict';
+
+app.factory('kooperationspartnerService', function ($http, $q) {
 
     var factory = [];
 

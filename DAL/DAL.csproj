@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="Attribute\SortNameAttribute.cs" />
     <Compile Include="FactoringContext.cs" />
+    <Compile Include="Manager\WebUserDataManager.cs" />
     <Compile Include="Manager\BaseDataManager.cs" />
     <Compile Include="Manager\KooperationspartnerDataManager.cs" />
+    <Compile Include="Models\WebUser.cs" />
     <Compile Include="Models\Kooperationspartner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

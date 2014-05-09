@@ -35,6 +35,7 @@ namespace Angular_SPA.Controllers.API {
       //}
 
       [HttpGet]
+      [Authorize]
       public ApiResult<PagedResponse<Kooperationspartner>> Get([FromUri] PagedRequest request) {
          try {
             //throw new Exception("Hat nicht geklappt");

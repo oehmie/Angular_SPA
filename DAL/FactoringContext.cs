@@ -26,6 +26,7 @@ namespace Angular_SPA.DAL {
       //}
 
       public DbSet<Kooperationspartner> KooperationspartnerSet { get; set; }
+      public DbSet<WebUser> WebUserSet { get; set; }
 
    }
 }
