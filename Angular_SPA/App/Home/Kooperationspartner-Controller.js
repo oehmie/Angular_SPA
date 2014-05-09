@@ -95,7 +95,7 @@ app.controller('kooperationspartnerController',
                     $scope.showData(data);
                 }, function (error) {
                     // error handling here
-                    $scope.showData(data);
+                    $scope.showData(error);
                 });
 
             }, 100);

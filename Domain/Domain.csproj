@@ -44,6 +44,8 @@
     <Compile Include="Classes\PagedResponse.cs" />
     <Compile Include="Extensions\IQueryableExtensions.cs" />
     <Compile Include="Manager\KooperationspartnerManager.cs" />
+    <Compile Include="Manager\WebUserManager.cs" />
+    <Compile Include="Models\WebUser.cs" />
     <Compile Include="Models\Kooperationspartner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

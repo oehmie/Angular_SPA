@@ -1,12 +1,12 @@
-﻿
+﻿'use strict';
 var app = angular.module('app', ['ui.router', 'ngGrid', 'angularFileUpload']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //
-    // For any unmatched url, redirect to /home
+    // Alle unbekannten Route auf Home umleiten
     $urlRouterProvider.otherwise("/home");
     //
-    // Now set up the states
+    // Die bekannten States zusammenbauen
     $stateProvider
       .state('home', {
           url: "/home",
@@ -25,16 +25,22 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "/app/home/kooperationspartner.html",
 
       })
-      .state('fileupload', {
-        url: "/fileupload",
-        templateUrl: "/app/home/fileupload.html",
+        .state('login', {
+            url: "/login",
+            templateUrl: "/app/secure/login.html",
 
-    });
+        })
+      .state('fileupload', {
+          url: "/fileupload",
+          templateUrl: "/app/home/fileupload.html",
+
+      });
 
 
 });
 
-app.factory('httpInterceptor', function ($q, $rootScope, $log) {
+//HTTP Interceptor für "busy" Spinner erstellen
+app.factory('busyHttpInterceptor', function ($q, $rootScope, $log) {
 
     var numLoadings = 0;
 
@@ -70,9 +76,10 @@ app.factory('httpInterceptor', function ($q, $rootScope, $log) {
     };
 })
 .config(function ($httpProvider) {
-    $httpProvider.interceptors.push('httpInterceptor');
+    $httpProvider.interceptors.push('busyHttpInterceptor');
 });
 
+//Die Directiven für Loader_Show und Loader_hide erstellen
 app.directive("loader", function ($rootScope) {
     return function ($scope, element, attrs) {
         $scope.$on("loader_show", function () {
@@ -84,6 +91,33 @@ app.directive("loader", function ($rootScope) {
     };
 }
 )
+
+//Directive für das automatische ausfüllen von Eingabefeldern bspw Passworten
+//Die Werte können nicht validiert werden, da OnChange nicht feuert.
+//Lösung: polyfill: https://github.com/tbosch/autofill-event
+app.directive('formAutofillFix', function ($timeout) {
+    return function (scope, element, attrs) {
+        element.prop('method', 'post');
+        if (attrs.ngSubmit) {
+            $timeout(function () {
+                element
+                  .unbind('submit')
+                  .bind('submit', function (event) {
+                      event.preventDefault();
+                      element
+                        .find('input, textarea, select')
+                        .trigger('input')
+                        .trigger('change')
+                        .trigger('keydown');
+                      scope.$apply(attrs.ngSubmit);
+                  });
+            });
+        }
+    };
+});
+
+
+
 
 app.run(function ($rootScope, $state) {
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {

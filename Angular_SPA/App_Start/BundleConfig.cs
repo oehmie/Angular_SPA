@@ -1,63 +1,61 @@
 ﻿using System;
 using System.Web.Optimization;
 
-namespace Angular_SPA
-{
-    public class BundleConfig
-    {
+namespace Angular_SPA {
+   public class BundleConfig {
 
-        public static void RegisterBundles(BundleCollection bundles)
-        {
+      public static void RegisterBundles(BundleCollection bundles) {
 
 
 
 
-            bundles.IgnoreList.Clear();
-            AddDefaultIgnorePatterns(bundles.IgnoreList);
+         bundles.IgnoreList.Clear();
+         AddDefaultIgnorePatterns(bundles.IgnoreList);
 
-            bundles.Add(
-              new ScriptBundle("~/scripts/vendor")
-                .Include("~/scripts/bootstrap.js")
-                .Include("~/scripts/jquery-{version}.js")
-                .Include("~/scripts/angular.js")
-                .Include("~/scripts/angular-ui-router.js")
-                .Include("~/scripts/ng-grid.js")
-                .Include("~/scripts/angular-file-upload.js")
-                //.Include("~/scripts/knockout-{version}.debug.js")
-                //.Include("~/scripts/sammy-{version}.js")
-                //.Include("~/scripts/toastr-{version}.js")
-                //.Include("~/scripts/Q.js")
-                //.Include("~/scripts/moment.js")
-                .Include("~/app/app.js")
-                .Include("~/app/home/*-controller.js")
-                .Include("~/app/home/*-service.js")
-                
-                );
+         bundles.Add(
+           new ScriptBundle("~/scripts/vendor")
+             .Include("~/scripts/bootstrap.js")
+             .Include("~/scripts/jquery-{version}.js")
+             .Include("~/scripts/angular.js")
+             .Include("~/scripts/angular-ui-router.js")
+             .Include("~/scripts/ng-grid.js")
+             .Include("~/scripts/angular-file-upload.js")
+             .Include("~/scripts/autofill-events.js")
+            //.Include("~/scripts/knockout-{version}.debug.js")
+            //.Include("~/scripts/sammy-{version}.js")
+            //.Include("~/scripts/toastr-{version}.js")
+            //.Include("~/scripts/Q.js")
+            //.Include("~/scripts/moment.js")
+             .Include("~/app/app.js")
+             .Include("~/app/home/*-Controller.js")
+             .Include("~/app/home/*-Service.js")
+             .Include("~/app/secure/*-Controller.js")
+             .Include("~/app/secure/*-Service.js")
+             .Include("~/app/secure/*-Interceptor.js")
+             );
 
-            bundles.Add(
-              new StyleBundle("~/Content/css")
-                .Include("~/Content/ie10mobile.css")
-                .Include("~/Content/bootstrap.css")
-                .Include("~/Content/ng-grid.css")
-                //.Include("~/Content/toastr.css")
-                .Include("~/Content/font-awesome.css")
-                .Include("~/Content/app.css")
-              );
-        }
+         bundles.Add(
+           new StyleBundle("~/Content/css")
+             .Include("~/Content/ie10mobile.css")
+             .Include("~/Content/bootstrap.css")
+             .Include("~/Content/ng-grid.css")
+            //.Include("~/Content/toastr.css")
+             .Include("~/Content/font-awesome.css")
+             .Include("~/Content/app.css")
+           );
+      }
 
 
-        public static void AddDefaultIgnorePatterns(IgnoreList ignoreList)
-        {
-            if (ignoreList == null)
-            {
-                throw new ArgumentNullException("ignoreList");
-            }
+      public static void AddDefaultIgnorePatterns(IgnoreList ignoreList) {
+         if (ignoreList == null) {
+            throw new ArgumentNullException("ignoreList");
+         }
 
-            ignoreList.Ignore("*.intellisense.js");
-            ignoreList.Ignore("*-vsdoc.js");
-            //ignoreList.Ignore("*.debug.js", OptimizationMode.WhenEnabled);
-            //ignoreList.Ignore("*.min.js", OptimizationMode.WhenDisabled);
-            //ignoreList.Ignore("*.min.css", OptimizationMode.WhenDisabled);
-        }
-    }
+         ignoreList.Ignore("*.intellisense.js");
+         ignoreList.Ignore("*-vsdoc.js");
+         //ignoreList.Ignore("*.debug.js", OptimizationMode.WhenEnabled);
+         //ignoreList.Ignore("*.min.js", OptimizationMode.WhenDisabled);
+         //ignoreList.Ignore("*.min.css", OptimizationMode.WhenDisabled);
+      }
+   }
 }
