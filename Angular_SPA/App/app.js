@@ -1,5 +1,5 @@
 ﻿'use strict';
-var app = angular.module('app', ['ui.router', 'ngGrid', 'angularFileUpload']);
+var app = angular.module('app', ['ui.router', 'ngGrid', 'angularFileUpload' ]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
     //

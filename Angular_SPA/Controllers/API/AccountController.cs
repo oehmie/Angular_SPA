@@ -18,6 +18,7 @@ using Microsoft.Owin.Infrastructure;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Angular_SPA.Results;
 using Angular_SPA.Providers;
+using Angular_SPA.Classes;
 
 namespace Angular_SPA.Controllers.API {
    [Authorize]
@@ -32,7 +33,7 @@ namespace Angular_SPA.Controllers.API {
       public AccountController(UserManager<WebUser> userManager,
         ISecureDataFormat<AuthenticationTicket> accessTokenFormat) {
          UserManager = userManager;
-         AccessTokenFormat = accessTokenFormat;
+         AccessTokenFormat = accessTokenFormat;       
       }
 
       public UserManager<WebUser> UserManager { get; private set; }
@@ -56,6 +57,42 @@ namespace Angular_SPA.Controllers.API {
       public IHttpActionResult Logout() {
          Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
          return Ok();
+      }
+
+      // POST api/Account/ForgotPassword
+      [HttpPost]
+      [AllowAnonymous]
+      [Route("ForgotPassword")]
+      public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model) {
+         if (!ModelState.IsValid) return BadRequest(ModelState);
+
+         var user = await UserManager.FindByNameAsync(model.Email);
+         if (user == null) {
+            // Don't reveal that the user does not exist or is not confirmed
+            ModelState.AddModelError("", "Der angegebene Benutzer existiert nicht.");
+            return BadRequest(ModelState);
+         }
+
+         var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+         var callbackUrl = Utilities.AbsoluteUrl("/ResetPassword?code=" + HttpUtility.UrlEncode(code));
+         await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+         return Ok(new { message = "We've emailed you a link to reset your password!" });
+      }
+
+      [HttpPost]
+      [AllowAnonymous]
+      [Route("ResetPassword")]
+      public async Task<IHttpActionResult> ResetPassword(ResetPasswordViewModel model) {
+         if (!ModelState.IsValid) return BadRequest(ModelState);
+         var user = await UserManager.FindByNameAsync(model.Email);
+
+         if (user != null) {
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            IHttpActionResult errorResult = GetErrorResult(result);
+            if (errorResult != null) return errorResult;
+         }
+
+         return Ok(new { message = "Your Password has been reset." });
       }
 
       // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true

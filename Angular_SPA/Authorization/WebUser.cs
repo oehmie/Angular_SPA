@@ -19,6 +19,15 @@ namespace Angular_SPA.Authorization {
          this.Id = Guid.NewGuid().ToString();
       }
 
+      //Keine Ahnung, wofür das gebraucht werden kann
+      //public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType = OAuthDefaults.AuthenticationType) {
+      //   // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+      //   var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
+      //   // Add custom user claims here
+      //   return userIdentity;
+      //}
+
+
       public override string Id { get; set; }
 
       public override string UserName {

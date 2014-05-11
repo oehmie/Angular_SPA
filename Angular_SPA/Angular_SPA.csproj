@@ -502,6 +502,7 @@
     <Compile Include="Authorization\WebUserPasswordHasher.cs" />
     <Compile Include="Authorization\WebUserStore.cs" />
     <Compile Include="Classes\CustomMultipartFormDataStreamProvider.cs" />
+    <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
     <Compile Include="Controllers\API\FileUploadController.cs" />
     <Compile Include="Controllers\API\KooperationspartnerController.cs" />

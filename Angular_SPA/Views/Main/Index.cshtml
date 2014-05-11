@@ -2,7 +2,7 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" ng-app='app'>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
@@ -12,7 +12,7 @@
     @Scripts.Render("~/scripts/vendor")
     @Styles.Render("~/Content/css")
 </head>
-<body ng-app='app'>
+<body>
 
     <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -31,7 +31,7 @@
                 and url. -->
                 <a class="navbar-brand" ui-sref="home">App-Name</a>
             </div>
-            
+
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
@@ -40,6 +40,14 @@
                     <li ui-sref-active="active"><a ui-sref="kooperationspartner">Kooperationspartner</a></li>
                     <li ui-sref-active="active"><a ui-sref="fileupload">Fileupload</a></li>
                     <li ui-sref-active="active"><a ui-sref="login">Login</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                            <strong>Admin</strong> <span class="caret"></span>
+                        </a>
+                        <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                            <li><a href="#">My Profile</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -47,7 +55,7 @@
 
     <div id="loaderDiv" loader>
         <i class="fa fa-cog fa-spin fa-4x ajax-loader"></i>
-    </div>    
+    </div>
 
     <!-- Here is a named ui-view. ui-views don't have to be named, but we'll be populate this
             on from various different child states and we want a name to help us target. -->
@@ -71,7 +79,7 @@
                 $(this).collapse('hide');
             }
         });
-    </script>    
+    </script>
 </body>
 
 

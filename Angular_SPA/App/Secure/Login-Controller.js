@@ -1,15 +1,17 @@
 ﻿app.controller("loginController",
     function ($scope, $http, $q, $stateParams, $state, $location, authService) {
 
-        $scope.text = "Benutzeranmeldung";
-
-        $scope.userName = "";
-        $scope.password = "";
+        $scope.title = "Benutzeranmeldung";
 
         $scope.hasErrors = false;
         $scope.errorText = '';
 
-        $scope.login = function (data) {
+        $scope.username = "";
+        $scope.password = "";
+
+        $scope.login = function (form) {
+            if (!form.$valid)
+                return;
             //$el.checkAndTriggerAutoFillEvent();
             $scope.hasErrors = false;
             authService.login($scope.username, $scope.password)

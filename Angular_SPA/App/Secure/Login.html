@@ -1,40 +1,55 @@
 ﻿<div ng-controller="loginController">
+    <div class="page-header">
+        <h1>{{ title }} <small>Subtext for header</small></h1>
+    </div>
     <div class="row">
-        <h2 class="form-signin-heading">{{ text }}</h2>
         <iframe src="formpost.html" name="formpost"
                 style="display:none"></iframe>
 
-        <form name="loginForm" class="form-signin col-lg-3" role="form"
-              action="formpost.html" target="formpost" method="post"
-              ng-submit="login(userForm.$valid)"
-              novalidate form-autofill-fix>
-
-            <input type="text" class="form-control" placeholder="Benutzername" required autofocus ng-model="username" ng-minlength="6" ng-maxlength="12">
-            <small class="error"
-                   ng-show="loginForm.email.$error.required">
-                das Feld Benutzername muss gefüllt sein.
-            </small>
-            <small class="error"
-                   ng-show="loginForm.email.$error.minlength">
-                Your email is required to be at least 3 characters
-            </small>
-            <small class="error"
-                   ng-show="loginForm.email.$error.email">
-                That is not a valid email. Please input a valid email.
-            </small>
-            <small class="error"
-                   ng-show="loginForm.email.$error.maxlength">
-                Your email cannot be longer than 20 characters
-            </small>
-            <input type="password" class="form-control" placeholder="Passwort" required ng-model="password" ng-minlength="6" ng-maxlength="12">
-            <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-            <button class="btn btn-lg btn-primary" type="submit">Anmelden</button>
-
+        <form name="loginForm" class="col-lg-3" role="form"
+              method="post"
+              target="formpost" action="formpost.html"
+              ng-submit="login(loginForm)"
+              form-autofill-fix
+              novalidate>
+            <div class="form-group" ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.username.$dirty }">
+                <label for="username">Benutzername</label>
+                <input name="username" type="text"
+                       class="form-control" placeholder="Benutzername"
+                       ng-model="username"
+                       autofocus required ng-minlength="5" ng-maxlength="12">
+                <p class="help-block"
+                   ng-show="loginForm.username.$error.required && loginForm.username.$dirty">
+                    Das Feld Benutzername muss gefüllt sein.
+                </p>
+                <p class="help-block"
+                   ng-show="loginForm.username.$error.minlength && loginForm.username.$dirty">
+                    Benutzername muß mindestens 5 Zeichen lang sein.
+                </p>
+                <p class="help-block"
+                   ng-show="loginForm.username.$error.maxlength && loginForm.username.$dirty">
+                    Benutzername darf maximal 12 Zeichen lang sein.
+                </p>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid && loginForm.password.$dirty }">
+                <label for="password">Passwort</label>
+                <input name="password" type="password" ng-model="password" class="form-control" placeholder="Passwort" required ng-minlength="6" ng-maxlength="12">
+                <p class="help-block"
+                   ng-show="loginForm.password.$error.required && loginForm.password.$dirty">
+                    Das Feld Passwort muss gefüllt sein.
+                </p>
+                <p class="help-block"
+                   ng-show="loginForm.password.$error.minlength && loginForm.password.$dirty">
+                    Das Passwort muß mindestens 6 Zeichen lang sein.
+                </p>
+                <p class="help-block"
+                   ng-show="loginForm.password.$error.maxlength && loginForm.password.$dirty">
+                    Das Passwort darf maximal 12 Zeichen lang sein.
+                </p>
+            </div>
+            <button class="btn btn-lg btn-primary" type="submit" ng-disabled="loginForm.$invalid">Anmelden</button>
         </form>
     </div>
-    <div class="row">
-        <div class="alert alert-danger" ng-show="hasErrors">{{errorText}}</div>
-    </div>
+    <p></p>
+    <div class="alert alert-danger" ng-show="hasErrors">{{errorText}}</div>
 </div>

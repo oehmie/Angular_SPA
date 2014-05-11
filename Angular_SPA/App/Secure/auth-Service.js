@@ -30,6 +30,30 @@ app.factory('authService', function ($http, $q) {
         return deferred.promise;
     }
 
+    factory.logout = function() {
+        var deferred = $q.defer();
+        $http({
+            method: 'POST',
+            url: '/api/account/logout',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        }).
+        success(function (data, status, headers, config) {
+            factory.isAuthenticated = false;
+            factory.username = undefined;
+            factory.bearerToken = undefined;
+            factory.expirationDate = undefined;
+            $http.defaults.headers.common.Authorization = 'Bearer ' + factory.bearerToken;
+            deferred.resolve(data)
+        }).
+        error(function (data, status) {
+            deferred.reject(data);
+        });
+
+
+        return deferred.promise;
+    }
 
 
     return factory;
