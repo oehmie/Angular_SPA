@@ -9,9 +9,14 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Angular_SPA.Authorization;
 using Angular_SPA.Providers;
+using Angular_SPA.Models;
 
 namespace Angular_SPA {
+
+
    public partial class Startup {
+
+
       static Startup() {
          PublicClientId = "self";
 
@@ -36,7 +41,7 @@ namespace Angular_SPA {
       public void ConfigureAuth(IAppBuilder app) {
 
          // Configure the db context, user manager and role manager to use a single instance per request
-         //app.CreatePerOwinContext(AppContext.Create);
+         app.CreatePerOwinContext(AuthorizationContext.Create);
          app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
          app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
 

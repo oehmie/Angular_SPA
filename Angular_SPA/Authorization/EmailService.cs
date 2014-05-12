@@ -9,9 +9,10 @@ using Microsoft.AspNet.Identity;
 namespace Angular_SPA.Authorization {
 
       public class EmailService : IIdentityMessageService {
+         
          public async Task SendAsync(IdentityMessage message) {
             // Plug in your email service here to send an email.
-            var email = new MailMessage {
+             MailMessage email = new MailMessage {
                Subject = message.Subject,
                Body = message.Body,
                IsBodyHtml = true
@@ -19,7 +20,7 @@ namespace Angular_SPA.Authorization {
             email.To.Add(message.Destination);
 
             using (var client = new SmtpClient()) {
-               await client.SendMailAsync(email);
+               //await client.SendMailAsync(email);
             }
          }
       }

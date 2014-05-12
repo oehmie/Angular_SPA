@@ -14,7 +14,8 @@
             $scope.hasErrors = false;
             authService.forgotPassword($scope.email)
             .then(function (data) {
-                var x = data;
+                $scope.responsemessage = data.message;
+                $state.go('passwortvergessen.response');
             }, function (error) {
                 // error handling here
                 $scope.hasErrors = true;

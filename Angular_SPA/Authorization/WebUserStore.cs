@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using Domain.Manager;
 using Microsoft.AspNet.Identity;
 
 namespace Angular_SPA.Authorization {
@@ -12,7 +11,15 @@ namespace Angular_SPA.Authorization {
    public class WebUserStore : IUserStore<WebUser>, IUserPasswordStore<WebUser>, IUserEmailStore<WebUser> {
 
 
-      WebUserManager manager = new WebUserManager();
+      protected AuthorizationContext manager;
+
+      public WebUserStore() : this(new AuthorizationContext()){
+
+      }
+
+      public WebUserStore(AuthorizationContext context) {
+         manager = context;
+      }
 
       public void Dispose() {
          manager.Dispose();
@@ -87,7 +94,7 @@ namespace Angular_SPA.Authorization {
 
 
       public Task<string> GetEmailAsync(WebUser user) {
-         throw new NotImplementedException();
+         return Task.FromResult(user.Email);
       }
 
       public Task<bool> GetEmailConfirmedAsync(WebUser user) {

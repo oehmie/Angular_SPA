@@ -19,6 +19,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Angular_SPA.Results;
 using Angular_SPA.Providers;
 using Angular_SPA.Classes;
+using Microsoft.AspNet.Identity.Owin;
+
 
 namespace Angular_SPA.Controllers.API {
 
@@ -28,26 +30,25 @@ namespace Angular_SPA.Controllers.API {
    public class AccountController : ApiController {
       private const string LocalLoginProvider = "Lokal";
 
-      public AccountController()
-         : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat) {
-      }
-
-      public AccountController(UserManager<WebUser> userManager,
-        ISecureDataFormat<AuthenticationTicket> accessTokenFormat) {
+      public AccountController() { }
+      public AccountController(ApplicationUserManager userManager) {
          UserManager = userManager;
-         AccessTokenFormat = accessTokenFormat;
-
-         //Tokenprovider erstellen
-         var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("Sample");
-         UserManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<WebUser>(provider.Create("EmailConfirmation"));
-
-
       }
 
-      public UserManager<WebUser> UserManager { get; private set; }
+      private ApplicationUserManager _userManager;
+      public ApplicationUserManager UserManager {
+         get {
+            return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+         }
+         private set {
+            _userManager = value;
+         }
+      }
+
+
       public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-   
+
       // GET api/Account/UserInfo
       [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
       [Route("UserInfo")]
@@ -60,7 +61,7 @@ namespace Angular_SPA.Controllers.API {
          };
       }
 
-      
+
       // POST api/Account/Logout
       [Route("Logout")]
       public IHttpActionResult Logout() {
@@ -68,13 +69,13 @@ namespace Angular_SPA.Controllers.API {
          return Ok();
       }
 
-      
+
       // POST api/Account/ForgotPassword
       [HttpPost]
       [AllowAnonymous]
       [Route("ForgotPassword")]
       public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model) {
-         if (!ModelState.IsValid) 
+         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
          var user = await UserManager.FindByEmailAsync(model.Email);
@@ -83,7 +84,7 @@ namespace Angular_SPA.Controllers.API {
             ModelState.AddModelError("", "Der angegebene Benutzer existiert nicht.");
             return BadRequest(ModelState);
          }
-         
+
          var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
          var callbackUrl = Utilities.AbsoluteUrl("/ResetPassword?code=" + HttpUtility.UrlEncode(code));
          await UserManager.SendEmailAsync(user.Id, "Passwort zurücksetzen", "Bitte setzen Sie Ihr Passwort zurück, indem Sie den angegebenen Link anklicken: <a href=\"" + callbackUrl + "\">link</a>");

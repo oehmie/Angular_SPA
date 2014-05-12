@@ -6,13 +6,14 @@
         <iframe src="formpost.html" name="formpost"
                 style="display:none"></iframe>
 
-        <form name="loginForm" class="col-lg-3" role="form"
+        <form name="loginForm" class="col-lg-4" role="form"
               method="post"
               target="formpost" action="formpost.html"
               ng-submit="login(loginForm)"
               form-autofill-fix
               novalidate>
-            <div class="form-group" ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.username.$dirty }">
+            <div class="form-group" 
+                 ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.username.$dirty }">
                 <label for="username">Benutzername</label>
                 <input name="username" type="text"
                        class="form-control" placeholder="Benutzername"

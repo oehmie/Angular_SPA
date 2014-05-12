@@ -176,6 +176,7 @@
     <Content Include="App\Secure\Login-Controller.js" />
     <Content Include="App\Secure\Login.html" />
     <Content Include="App\Secure\passwortvergessen-controller.js" />
+    <Content Include="App\Secure\passwortvergessen.response.html" />
     <Content Include="App\Secure\passwortvergessen.html" />
     <Content Include="Content\app.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -501,6 +502,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Authorization\AuthorizationContext.cs" />
     <Compile Include="Authorization\WebUser.cs" />
     <Compile Include="Authorization\WebUserPasswordHasher.cs" />
     <Compile Include="Authorization\WebUserStore.cs" />

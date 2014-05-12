@@ -30,6 +30,15 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('passwortvergessen', {
             url: "/passwortvergessen",
             templateUrl: "/app/secure/passwortvergessen.html",
+            data: {
+                message: '',
+                success: false
+            }
+
+        })
+        .state('passwortvergessen.response', {
+            url: "/response",
+            templateUrl: "/app/secure/passwortvergessen.response.html",
 
         })
       .state('fileupload', {

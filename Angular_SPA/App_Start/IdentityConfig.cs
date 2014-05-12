@@ -25,7 +25,7 @@ namespace Angular_SPA.Models {
 		}
 
 		public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) {
-			var manager = new ApplicationUserManager(new WebUserStore(context.Get<AppContext>()));
+			var manager = new ApplicationUserManager(new WebUserStore(context.Get<AuthorizationContext>()));
 			// Configure validation logic for usernames
 			manager.UserValidator = new UserValidator<WebUser>(manager) {
 				AllowOnlyAlphanumericUserNames = false,
@@ -117,27 +117,13 @@ namespace Angular_SPA.Models {
 		}
 
 		public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context) {
-			var manager = new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<AppContext>()));
+         var manager = new ApplicationRoleManager(new RoleStore<IdentityRole>(context.Get<AuthorizationContext>()));
 
 			return manager;
 		}
 	}
 
-	public class EmailService : IIdentityMessageService {
-		public async Task SendAsync(IdentityMessage message) {
-			// Plug in your email service here to send an email.
-			var email = new MailMessage {
-				Subject = message.Subject,
-				Body = message.Body,
-				IsBodyHtml = true
-			};
-			email.To.Add(message.Destination);
-
-			using (var client = new SmtpClient()) {
-				await client.SendMailAsync(email);
-			}
-		}
-	}
+	
 
 	public class SmsService : IIdentityMessageService {
 		public Task SendAsync(IdentityMessage message) {
@@ -149,14 +135,14 @@ namespace Angular_SPA.Models {
 	// This is useful if you do not want to tear down the database each time you run the application.
 	//public class ApplicationDbInitializer : DropCreateDatabaseAlways<AppContext> {
 	// This example shows you how to create a new database if the Model changes
-	public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<AppContext> {
-		protected override void Seed(AppContext context) {
+   public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<AuthorizationContext> {
+      protected override void Seed(AuthorizationContext context) {
 			InitializeIdentityForEF(context);
 			base.Seed(context);
 		}
 
 		//Create User=Admin@Admin.com with password=Admin@123456 in the Admin role        
-		public static void InitializeIdentityForEF(AppContext db) {
+      public static void InitializeIdentityForEF(AuthorizationContext db) {
 			var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
 			var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
 			const string name = "admin@admin.com";
