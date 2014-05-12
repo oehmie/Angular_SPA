@@ -1,11 +1,8 @@
 ﻿'use strict';
-var app = angular.module('app', ['ui.router', 'ngGrid', 'angularFileUpload' ]);
+var app = angular.module('app', ['ui.router', 'ngGrid', 'angularFileUpload']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-    //
-    // Alle unbekannten Route auf Home umleiten
-    $urlRouterProvider.otherwise("/home");
-    //
+
     // Die bekannten States zusammenbauen
     $stateProvider
       .state('home', {
@@ -30,13 +27,19 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/app/secure/login.html",
 
         })
+        .state('passwortvergessen', {
+            url: "/passwortvergessen",
+            templateUrl: "/app/secure/passwortvergessen.html",
+
+        })
       .state('fileupload', {
           url: "/fileupload",
           templateUrl: "/app/home/fileupload.html",
 
       });
 
-
+    // Alle unbekannten Route auf Home umleiten
+    $urlRouterProvider.otherwise("/home");
 });
 
 //HTTP Interceptor für "busy" Spinner erstellen
@@ -119,17 +122,21 @@ app.directive('formAutofillFix', function ($timeout) {
 
 
 
-app.run(function ($rootScope, $state) {
-    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-        //if (fromState.name == 'kooperationspartner') {
-        //    angular.element('[ng-controller=kooperationspartnerController]').remove();
-        //}
-        //if (toState.authenticate && !AuthService.isAuthenticated()) {
-        //    // User isn’t authenticated
-        //    $state.transitionTo("login");
-        //    event.preventDefault();
-        //}
-    });
+app.run(function ($rootScope, $state, $stateParams) {
+
+    $rootScope.$state = $state;
+    $rootScope.$stateParams = $stateParams;
+
+    //$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+    //if (fromState.name == 'kooperationspartner') {
+    //    angular.element('[ng-controller=kooperationspartnerController]').remove();
+    //}
+    //if (toState.authenticate && !AuthService.isAuthenticated()) {
+    //    // User isn’t authenticated
+    //    $state.transitionTo("login");
+    //    event.preventDefault();
+    //}
+    //});
 });
 
 

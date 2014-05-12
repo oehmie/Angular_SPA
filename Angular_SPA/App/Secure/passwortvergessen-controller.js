@@ -1,25 +1,20 @@
-﻿app.controller("loginController",
+﻿app.controller("passwortvergessenController",
     function ($scope, $http, $q, $stateParams, $state, $location, authService) {
 
-        $scope.title = "Benutzeranmeldung";
+        $scope.title = "Passwort vergessen";
 
         $scope.hasErrors = false;
         $scope.errorText = '';
+        
+        $scope.email = '';
 
-        $scope.username = "";
-        $scope.password = "";
-
-        $scope.login = function (form) {
+        $scope.passwortvergessen = function (form) {
             if (!form.$valid)
                 return;
-            //$el.checkAndTriggerAutoFillEvent();
             $scope.hasErrors = false;
-            authService.login($scope.username, $scope.password)
+            authService.forgotPassword($scope.email)
             .then(function (data) {
-                //Weiterleitung auf die gewünschte Seite
-                var redirect = $location.search();
-                if (redirect.returnTo)
-                   $location.path(redirect.returnTo);
+                var x = data;
             }, function (error) {
                 // error handling here
                 $scope.hasErrors = true;
@@ -30,6 +25,6 @@
                     $scope.errorText = angular.fromJson(error);
                 }
             });
-        };
 
+        }
     });

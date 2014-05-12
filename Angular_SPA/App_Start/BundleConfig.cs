@@ -29,6 +29,8 @@ namespace Angular_SPA {
              .Include("~/app/app.js")
              .Include("~/app/home/*-Controller.js")
              .Include("~/app/home/*-Service.js")
+             .Include("~/app/navbar/*-Controller.js")
+             .Include("~/app/navbar/*-Service.js")
              .Include("~/app/secure/*-Controller.js")
              .Include("~/app/secure/*-Service.js")
              .Include("~/app/secure/*-Interceptor.js")

@@ -25,12 +25,12 @@ namespace Angular_SPA.Providers {
 
          _publicClientId = publicClientId;
          _userManagerFactory = userManagerFactory;
+
       }
 
       public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) {
          using (UserManager<WebUser> userManager = _userManagerFactory()) {
             WebUser user = await userManager.FindAsync(context.UserName, context.Password);
-
             if (user == null) {
                context.SetError("invalid_grant", "Der Benutzername oder das Kennwort ist falsch.");
                return;

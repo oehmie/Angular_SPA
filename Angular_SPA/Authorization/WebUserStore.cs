@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 namespace Angular_SPA.Authorization {
 
 
-   public class WebUserStore : IUserStore<WebUser>, IUserPasswordStore<WebUser> {
+   public class WebUserStore : IUserStore<WebUser>, IUserPasswordStore<WebUser>, IUserEmailStore<WebUser> {
 
 
       WebUserManager manager = new WebUserManager();
@@ -18,7 +18,14 @@ namespace Angular_SPA.Authorization {
          manager.Dispose();
       }
 
+
+      //------ IUserStore -----
+
       public Task CreateAsync(WebUser user) {
+         throw new NotImplementedException();
+      }
+
+      public Task UpdateAsync(WebUser user) {
          throw new NotImplementedException();
       }
 
@@ -26,15 +33,18 @@ namespace Angular_SPA.Authorization {
          throw new NotImplementedException();
       }
 
+
       public Task<WebUser> FindByIdAsync(string userId) {
-         throw new NotImplementedException();
+         //Nur als Dummy, um etwas zurückzuliefern:
+         return FindByNameAsync(userId);
       }
 
       public Task<WebUser> FindByNameAsync(string userName) {
          WebUser user = new WebUser() {
             AppPassword = "password123",
             AppUserId = 1,
-            AppUserName = "Alice"
+            AppUserName = "Alice01",
+            Email = "m.oehmichen@sozialbank.de"
          };
          return Task<WebUser>.FromResult(user);
 
@@ -45,11 +55,10 @@ namespace Angular_SPA.Authorization {
          //return task;
       }
 
-      public Task UpdateAsync(WebUser user) {
-         throw new NotImplementedException();
-      }
+      
 
       
+      //--------IUserPasswordStore -------------
 
       public Task<string> GetPasswordHashAsync(WebUser user) {
          if (user == null) {
@@ -59,16 +68,41 @@ namespace Angular_SPA.Authorization {
          return Task.FromResult(user.AppPassword);
       }
 
-      public Task<bool> HasPasswordAsync(WebUser user) {
-         return Task.FromResult(user.AppPassword != null);
-      }
-
       public Task SetPasswordHashAsync(WebUser user, string passwordHash) {
          throw new NotImplementedException();
       }
 
+      public Task<bool> HasPasswordAsync(WebUser user) {
+         return Task.FromResult(user.AppPassword != null);
+      }
+
+      
+      //------ IUserEmailStore ------------
+
+      public Task<WebUser> FindByEmailAsync(string email) {
+
+         //Nur als Dummy, um etwas zurückzuliefern:
+         return FindByNameAsync(email);
+      }
 
 
+      public Task<string> GetEmailAsync(WebUser user) {
+         throw new NotImplementedException();
+      }
 
+      public Task<bool> GetEmailConfirmedAsync(WebUser user) {
+         throw new NotImplementedException();
+      }
+
+      public Task SetEmailAsync(WebUser user, string email) {
+         throw new NotImplementedException();
+      }
+
+      public Task SetEmailConfirmedAsync(WebUser user, bool confirmed) {
+         throw new NotImplementedException();
+      }
+
+
+      
    }
 }

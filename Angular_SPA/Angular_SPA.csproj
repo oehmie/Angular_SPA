@@ -167,7 +167,7 @@
     <Content Include="App\Home\Kooperationspartner-Service.js" />
     <Content Include="App\Home\Kooperationspartner.html" />
     <Content Include="App\Navbar\Navbar.html" />
-    <Content Include="App\Navbar\Navbar.js" />
+    <Content Include="App\Navbar\navbar-Controller.js" />
     <Content Include="App\Search\Results.html" />
     <Content Include="App\Search\Results.js" />
     <Content Include="App\Secure\auth-Controller.js" />
@@ -175,6 +175,8 @@
     <Content Include="App\Secure\auth-Service.js" />
     <Content Include="App\Secure\Login-Controller.js" />
     <Content Include="App\Secure\Login.html" />
+    <Content Include="App\Secure\passwortvergessen-controller.js" />
+    <Content Include="App\Secure\passwortvergessen.html" />
     <Content Include="Content\app.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -495,6 +497,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -502,6 +505,7 @@
     <Compile Include="Authorization\WebUserPasswordHasher.cs" />
     <Compile Include="Authorization\WebUserStore.cs" />
     <Compile Include="Classes\CustomMultipartFormDataStreamProvider.cs" />
+    <Compile Include="Authorization\EmailService.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Controllers\API\AccountController.cs" />
     <Compile Include="Controllers\API\FileUploadController.cs" />

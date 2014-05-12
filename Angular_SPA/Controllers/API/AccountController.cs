@@ -21,6 +21,8 @@ using Angular_SPA.Providers;
 using Angular_SPA.Classes;
 
 namespace Angular_SPA.Controllers.API {
+
+
    [Authorize]
    [RoutePrefix("api/Account")]
    public class AccountController : ApiController {
@@ -33,18 +35,24 @@ namespace Angular_SPA.Controllers.API {
       public AccountController(UserManager<WebUser> userManager,
         ISecureDataFormat<AuthenticationTicket> accessTokenFormat) {
          UserManager = userManager;
-         AccessTokenFormat = accessTokenFormat;       
+         AccessTokenFormat = accessTokenFormat;
+
+         //Tokenprovider erstellen
+         var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider("Sample");
+         UserManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<WebUser>(provider.Create("EmailConfirmation"));
+
+
       }
 
       public UserManager<WebUser> UserManager { get; private set; }
       public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
+   
       // GET api/Account/UserInfo
       [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
       [Route("UserInfo")]
       public UserInfoViewModel GetUserInfo() {
          ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
          return new UserInfoViewModel {
             UserName = User.Identity.GetUserName(),
             HasRegistered = externalLogin == null,
@@ -52,6 +60,7 @@ namespace Angular_SPA.Controllers.API {
          };
       }
 
+      
       // POST api/Account/Logout
       [Route("Logout")]
       public IHttpActionResult Logout() {
@@ -59,24 +68,26 @@ namespace Angular_SPA.Controllers.API {
          return Ok();
       }
 
+      
       // POST api/Account/ForgotPassword
       [HttpPost]
       [AllowAnonymous]
       [Route("ForgotPassword")]
       public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordViewModel model) {
-         if (!ModelState.IsValid) return BadRequest(ModelState);
+         if (!ModelState.IsValid) 
+            return BadRequest(ModelState);
 
-         var user = await UserManager.FindByNameAsync(model.Email);
+         var user = await UserManager.FindByEmailAsync(model.Email);
          if (user == null) {
             // Don't reveal that the user does not exist or is not confirmed
             ModelState.AddModelError("", "Der angegebene Benutzer existiert nicht.");
             return BadRequest(ModelState);
          }
-
+         
          var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
          var callbackUrl = Utilities.AbsoluteUrl("/ResetPassword?code=" + HttpUtility.UrlEncode(code));
-         await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-         return Ok(new { message = "We've emailed you a link to reset your password!" });
+         await UserManager.SendEmailAsync(user.Id, "Passwort zurücksetzen", "Bitte setzen Sie Ihr Passwort zurück, indem Sie den angegebenen Link anklicken: <a href=\"" + callbackUrl + "\">link</a>");
+         return Ok(new { message = "Sie erhalten eine Email, um Ihr Passwort zurückzusetzen." });
       }
 
       [HttpPost]
@@ -92,7 +103,7 @@ namespace Angular_SPA.Controllers.API {
             if (errorResult != null) return errorResult;
          }
 
-         return Ok(new { message = "Your Password has been reset." });
+         return Ok(new { message = "Das Passwort wurde erfolgreich zurückgesetzt." });
       }
 
       // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true

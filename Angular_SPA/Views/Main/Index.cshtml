@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <nav class="navbar navbar-fixed-top navbar-default" role="navigation" ng-controller="navbarController">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="container-fluid">
             <div class="navbar-header">
@@ -39,13 +39,15 @@
                     <li ui-sref-active="active"><a ui-sref="contact">Contacts</a></li>
                     <li ui-sref-active="active"><a ui-sref="kooperationspartner">Kooperationspartner</a></li>
                     <li ui-sref-active="active"><a ui-sref="fileupload">Fileupload</a></li>
-                    <li ui-sref-active="active"><a ui-sref="login">Login</a></li>
-                    <li class="dropdown">
+                    <li ui-sref-active="active"><a ui-sref="login" ng-show="!isAuthenticated()"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <li class="dropdown" ng-show="isAuthenticated()">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                            <strong>Admin</strong> <span class="caret"></span>
+                            <i class="fa fa-user"></i> <strong>{{ getUserName() }}</strong> <span class="caret"></span>
                         </a>
                         <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                            <li><a href="#">My Profile</a></li>
+                            <li><a href="#"><i class="fa fa-user-md"></i> Profile</a></li>
+                            <li><a href="#"><i class="fa fa-key"></i> Passwort ändern</a></li>
+                            <li><a href="#" ng-click="logout()"><i class="fa fa-sign-out"></i> Abmelden</a></li>
                         </ul>
                     </li>
                 </ul>

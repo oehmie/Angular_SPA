@@ -27,14 +27,14 @@ namespace Angular_SPA.Models {
       public string Email { get; set; }
 
       [Required]
-      [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+      [StringLength(100, ErrorMessage = "Das {0} muss mindestens {2} Zeichen lang sein.", MinimumLength = 6)]
       [DataType(DataType.Password)]
       [Display(Name = "Password")]
       public string Password { get; set; }
 
       [DataType(DataType.Password)]
       [Display(Name = "Confirm password")]
-      [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+      [Compare("Password", ErrorMessage = "Das Kennwort stimmt nicht mit dem Bestätigungskennwort überein")]
       public string ConfirmPassword { get; set; }
 
       public string Code { get; set; }
@@ -56,7 +56,7 @@ namespace Angular_SPA.Models {
 
       [DataType(DataType.Password)]
       [Display(Name = "Neues Kennwort bestätigen")]
-      [Compare("NewPassword", ErrorMessage = "Das neue Kennwort stimmt nicht mit dem Bestätigungskennwort überein.")]
+      [Compare("NewPassword", ErrorMessage = "Das Kennwort stimmt nicht mit dem Bestätigungskennwort überein")]
       public string ConfirmPassword { get; set; }
    }
 
