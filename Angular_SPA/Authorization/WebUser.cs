@@ -11,6 +11,10 @@ using Microsoft.Owin.Security.OAuth;
 
 namespace Angular_SPA.Authorization {
 
+
+   /// <summary>
+   /// Der Webbenutzer, der sich anmeldet
+   /// </summary>
    public class WebUser : IdentityUser {
 
       //Existing database fields

@@ -7,8 +7,7 @@ namespace Angular_SPA {
       public static void RegisterBundles(BundleCollection bundles) {
 
 
-
-
+               
          bundles.IgnoreList.Clear();
          AddDefaultIgnorePatterns(bundles.IgnoreList);
 
@@ -20,6 +19,8 @@ namespace Angular_SPA {
              .Include("~/scripts/angular-ui-router.js")
              .Include("~/scripts/ng-grid.js")
              .Include("~/scripts/angular-file-upload.js")
+             .Include("~/scripts/angular-ui/ui-bootstrap.js")
+             .Include("~/scripts/angular-ui/ui-bootstrap-tpls.js")
              .Include("~/scripts/autofill-events.js")
             //.Include("~/scripts/knockout-{version}.debug.js")
             //.Include("~/scripts/sammy-{version}.js")

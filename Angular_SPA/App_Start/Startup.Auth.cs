@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
-//using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
@@ -18,22 +17,11 @@ namespace Angular_SPA {
 
 
       static Startup() {
-         PublicClientId = "self";
-
-         UserManagerFactory = () => new UserManager<WebUser>(new WebUserStore()) { PasswordHasher = new WebUserPasswordHasher() };
-
-         OAuthOptions = new OAuthAuthorizationServerOptions {
-            TokenEndpointPath = new PathString("/Token"),
-            Provider = new ApplicationOAuthProvider(PublicClientId, UserManagerFactory),
-            AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-            AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-            AllowInsecureHttp = true  
-         };
+         
+         
       }
 
       public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
-
-      public static Func<UserManager<WebUser>> UserManagerFactory { get; set; }
 
       public static string PublicClientId { get; private set; }
 
@@ -52,6 +40,15 @@ namespace Angular_SPA {
          app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
          // Anwendung für die Verwendung eines Trägertokens zum Authentifizieren von Benutzern aktivieren
+         PublicClientId = "self";
+
+         OAuthOptions = new OAuthAuthorizationServerOptions {
+            TokenEndpointPath = new PathString("/Token"),
+            Provider = new ApplicationOAuthProvider(PublicClientId),
+            AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+            AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+            AllowInsecureHttp = true
+         };
          app.UseOAuthBearerTokens(OAuthOptions);
 
          // Auskommentierung der folgenden Zeilen aufheben, um die Anmeldung mit Anmeldeanbietern von Drittanbietern zu ermöglichen

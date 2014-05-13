@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
@@ -8,9 +10,13 @@ using Microsoft.AspNet.Identity;
 namespace Angular_SPA.Authorization {
 
 
+   /// <summary>
+   /// UserStore für den WebUser
+   /// </summary>
    public class WebUserStore : IUserStore<WebUser>, IUserPasswordStore<WebUser>, IUserEmailStore<WebUser> {
 
 
+      //Datencontext für den Zugriff auf die Datenbank mit den Usern
       protected AuthorizationContext manager;
 
       public WebUserStore() : this(new AuthorizationContext()){
@@ -47,11 +53,17 @@ namespace Angular_SPA.Authorization {
       }
 
       public Task<WebUser> FindByNameAsync(string userName) {
+
+
+         string pw = "password123";
+         MD5CryptoServiceProvider HashMD5 = new MD5CryptoServiceProvider();
+         pw = Convert.ToBase64String(HashMD5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pw)));
+
          WebUser user = new WebUser() {
-            AppPassword = "password123",
-            AppUserId = 1,
-            AppUserName = "Alice01",
-            Email = "m.oehmichen@sozialbank.de"
+            UserName = userName,
+            Email = "m.oehmichen@sozialbank.de",
+            EmailConfirmed = true,
+            PasswordHash = pw
          };
          return Task<WebUser>.FromResult(user);
 
@@ -72,7 +84,7 @@ namespace Angular_SPA.Authorization {
             throw new ArgumentNullException("user");
          }
 
-         return Task.FromResult(user.AppPassword);
+         return Task.FromResult(user.PasswordHash);
       }
 
       public Task SetPasswordHashAsync(WebUser user, string passwordHash) {

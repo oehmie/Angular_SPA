@@ -20,7 +20,7 @@ namespace Angular_SPA.Authorization {
             email.To.Add(message.Destination);
 
             using (var client = new SmtpClient()) {
-               //await client.SendMailAsync(email);
+               await client.SendMailAsync(email);
             }
          }
       }

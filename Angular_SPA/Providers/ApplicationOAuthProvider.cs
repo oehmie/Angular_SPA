@@ -4,51 +4,54 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Angular_SPA.Authorization;
+using Angular_SPA.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 
 namespace Angular_SPA.Providers {
    public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider {
-      private readonly string _publicClientId;
-      private readonly Func<UserManager<WebUser>> _userManagerFactory;
 
-      public ApplicationOAuthProvider(string publicClientId, Func<UserManager<WebUser>> userManagerFactory) {
+
+      private readonly string _publicClientId;
+
+
+      public ApplicationOAuthProvider(string publicClientId) {
          if (publicClientId == null) {
             throw new ArgumentNullException("publicClientId");
          }
 
-         if (userManagerFactory == null) {
-            throw new ArgumentNullException("userManagerFactory");
-         }
-
          _publicClientId = publicClientId;
-         _userManagerFactory = userManagerFactory;
 
       }
 
       public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) {
-         using (UserManager<WebUser> userManager = _userManagerFactory()) {
+         try {
+            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+
+
             WebUser user = await userManager.FindAsync(context.UserName, context.Password);
             if (user == null) {
                context.SetError("invalid_grant", "Der Benutzername oder das Kennwort ist falsch.");
                return;
             }
-            try {
-               ClaimsIdentity oAuthIdentity = await userManager.CreateIdentityAsync(user,
-                   context.Options.AuthenticationType);
-               ClaimsIdentity cookiesIdentity = await userManager.CreateIdentityAsync(user,
-                   CookieAuthenticationDefaults.AuthenticationType);
-               AuthenticationProperties properties = CreateProperties(user.UserName);
-               AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
-               context.Validated(ticket);
-               context.Request.Context.Authentication.SignIn(cookiesIdentity);
-            }
-            catch (Exception ex) {
-               throw;
-            }
+
+            ClaimsIdentity oAuthIdentity = await userManager.CreateIdentityAsync(user,
+                context.Options.AuthenticationType);
+            ClaimsIdentity cookiesIdentity = await userManager.CreateIdentityAsync(user,
+                CookieAuthenticationDefaults.AuthenticationType);
+            AuthenticationProperties properties = CreateProperties(user.UserName);
+            AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
+            context.Validated(ticket);
+            context.Request.Context.Authentication.SignIn(cookiesIdentity);
          }
+         catch (Exception ex) {
+            throw;
+         }
+
       }
 
       public override Task TokenEndpoint(OAuthTokenEndpointContext context) {
