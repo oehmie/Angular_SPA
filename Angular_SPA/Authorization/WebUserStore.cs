@@ -61,7 +61,8 @@ namespace Angular_SPA.Authorization {
 
          WebUser user = new WebUser() {
             UserName = userName,
-            Email = "m.oehmichen@sozialbank.de",
+            //Email = "m.oehmichen@sozialbank.de",
+            Email = "markus@oehmie.de",
             EmailConfirmed = true,
             PasswordHash = pw
          };

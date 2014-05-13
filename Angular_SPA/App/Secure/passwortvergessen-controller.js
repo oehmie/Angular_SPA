@@ -38,6 +38,7 @@
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
                 controller: ModalInstanceCtrl,
+                windowClass: 'modal fade in',
                 size: 'sm',
                 resolve: {
                     text: function () {

@@ -177,6 +177,8 @@
     <Content Include="App\Secure\Login.html" />
     <Content Include="App\Secure\passwortvergessen-controller.js" />
     <Content Include="App\Secure\passwortvergessen.html" />
+    <Content Include="App\Secure\resetpassword-Controller.js" />
+    <Content Include="App\Secure\resetpassword.html" />
     <Content Include="Content\app.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

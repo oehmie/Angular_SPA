@@ -86,7 +86,7 @@ namespace Angular_SPA.Controllers.API {
          }
 
          var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-         var callbackUrl = Utilities.AbsoluteUrl("/ResetPassword?code=" + HttpUtility.UrlEncode(code));
+         var callbackUrl = Utilities.AbsoluteUrl("/#/ResetPassword?code=" + HttpUtility.UrlEncode(code));
          await UserManager.SendEmailAsync(user.Id, "Passwort zurücksetzen", "Bitte setzen Sie Ihr Passwort zurück, indem Sie den angegebenen Link anklicken: <a href=\"" + callbackUrl + "\">link</a>");
          return Ok(new { message = "Sie erhalten eine Email, um Ihr Passwort zurückzusetzen." });
       }

@@ -1,7 +1,7 @@
 ﻿'use strict';
-var app = angular.module('app', ['ui.router','ui.bootstrap', 'ngGrid', 'angularFileUpload']);
+var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'ngGrid', 'angularFileUpload'])
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
 
     // Die bekannten States zusammenbauen
     $stateProvider
@@ -22,29 +22,33 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           templateUrl: "/app/home/kooperationspartner.html",
 
       })
-        .state('login', {
-            url: "/login",
-            templateUrl: "/app/secure/login.html",
-
-        })
-        .state('passwortvergessen', {
-            url: "/passwortvergessen",
-            templateUrl: "/app/secure/passwortvergessen.html",
-            
-
-        })
+      .state('login', {
+          url: "/login",
+          templateUrl: "/app/secure/login.html",
+      })
+      .state('passwortvergessen', {
+          url: "/passwortvergessen",
+          templateUrl: "/app/secure/passwortvergessen.html",
+      })
+      .state('resetpassword', {
+          url: "/resetpassword?code",
+          templateUrl: "/app/secure/resetpassword.html",
+      })
       .state('fileupload', {
           url: "/fileupload",
           templateUrl: "/app/home/fileupload.html",
-
       });
 
     // Alle unbekannten Route auf Home umleiten
     $urlRouterProvider.otherwise("/home");
-});
+
+    
+})
+
+
 
 //HTTP Interceptor für "busy" Spinner erstellen
-app.factory('busyHttpInterceptor', function ($q, $rootScope, $log) {
+.factory('busyHttpInterceptor', function ($q, $rootScope, $log) {
 
     var numLoadings = 0;
 
@@ -81,10 +85,10 @@ app.factory('busyHttpInterceptor', function ($q, $rootScope, $log) {
 })
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('busyHttpInterceptor');
-});
+})
 
 //Die Directiven für Loader_Show und Loader_hide erstellen
-app.directive("loader", function ($rootScope) {
+.directive("loader", function ($rootScope) {
     return function ($scope, element, attrs) {
         $scope.$on("loader_show", function () {
             return element.show();
@@ -99,7 +103,7 @@ app.directive("loader", function ($rootScope) {
 //Directive für das automatische ausfüllen von Eingabefeldern bspw Passworten
 //Die Werte können nicht validiert werden, da OnChange nicht feuert.
 //Lösung: polyfill: https://github.com/tbosch/autofill-event
-app.directive('formAutofillFix', function ($timeout) {
+.directive('formAutofillFix', function ($timeout) {
     return function (scope, element, attrs) {
         element.prop('method', 'post');
         if (attrs.ngSubmit) {
@@ -118,26 +122,39 @@ app.directive('formAutofillFix', function ($timeout) {
             });
         }
     };
-});
+})
+
+.factory('stateMonitorSvc', function ($rootScope) {
+    
+    return function($rootScope){
+        $rootScope.$on('$stateChangeStart',
+        function (event, toState, toParams, fromState, fromParams) {
+            console.log('changing state from', fromState.name, 'to', toState.name);
+        });
+        $rootScope.$on('$stateChangeSuccess',
+        function (event, toState, toParams, fromState, fromParams) {
+            console.log('changed state from', fromState.name, 'to', toState.name);
+        });
+        $rootScope.$on('$stateNotFound', function (unfoundState) {
+            console.log('tried to change to state', unfoundState.to,
+            'but that state is not known');
+        });
+        $rootScope.$on('$stateChangeError',
+        function (event, toState, toParams, fromState, fromParams, error) {
+            console.log(error, 'changing state from',
+            fromState.name, 'to', toState.name);
+        });
+    }
+
+})
 
 
-
-
-app.run(function ($rootScope, $state, $stateParams) {
+.run(function ($rootScope, $state, $stateParams) {
 
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
-    //$rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-    //if (fromState.name == 'kooperationspartner') {
-    //    angular.element('[ng-controller=kooperationspartnerController]').remove();
-    //}
-    //if (toState.authenticate && !AuthService.isAuthenticated()) {
-    //    // User isn’t authenticated
-    //    $state.transitionTo("login");
-    //    event.preventDefault();
-    //}
-    //});
+    
 });
 
 
