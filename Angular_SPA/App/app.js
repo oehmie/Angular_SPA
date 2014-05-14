@@ -1,136 +1,153 @@
 ﻿'use strict';
 var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'ngGrid', 'angularFileUpload'])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider',
+   function ($stateProvider, $urlRouterProvider) {
 
-    // Die bekannten States zusammenbauen
-    $stateProvider
-      .state('home', {
-          url: "/home",
-          templateUrl: "/app/home/home.html"
-      })
-      .state('about', {
-          url: "/about",
-          templateUrl: "/app/home/about.html"
-      })
-      .state('contact', {
-          url: "/contact",
-          templateUrl: "/app/home/contact.html"
-      })
-      .state('kooperationspartner', {
-          url: "/kooperationspartner",
-          templateUrl: "/app/home/kooperationspartner.html",
+       // Die bekannten States zusammenbauen
+       $stateProvider
+         .state('home', {
+             url: "/home",
+             templateUrl: "/app/home/home.html"
+         })
+         .state('about', {
+             url: "/about",
+             templateUrl: "/app/home/about.html"
+         })
+         .state('contact', {
+             url: "/contact",
+             templateUrl: "/app/home/contact.html"
+         })
+         .state('kooperationspartner', {
+             url: "/kooperationspartner",
+             templateUrl: "/app/home/kooperationspartner.html",
 
-      })
-      .state('login', {
-          url: "/login",
-          templateUrl: "/app/secure/login.html",
-      })
-      .state('passwortvergessen', {
-          url: "/passwortvergessen",
-          templateUrl: "/app/secure/passwortvergessen.html",
-      })
-      .state('resetpassword', {
-          url: "/resetpassword?code",
-          templateUrl: "/app/secure/resetpassword.html",
-      })
-      .state('fileupload', {
-          url: "/fileupload",
-          templateUrl: "/app/home/fileupload.html",
-      });
+         })
+         .state('login', {
+             url: "/login",
+             templateUrl: "/app/secure/login.html",
+         })
+         .state('passwortvergessen', {
+             url: "/passwortvergessen",
+             templateUrl: "/app/secure/passwortvergessen.html",
+         })
+         .state('resetpassword', {
+             url: "/resetpassword?code",
+             templateUrl: "/app/secure/resetpassword.html",
+         })
+         .state('fileupload', {
+             url: "/fileupload",
+             templateUrl: "/app/home/fileupload.html",
+         });
 
-    // Alle unbekannten Route auf Home umleiten
-    $urlRouterProvider.otherwise("/home");
+       // Alle unbekannten Route auf Home umleiten
+       $urlRouterProvider.otherwise("/home");
 
-    
-})
+
+   }
+])
 
 
 
 //HTTP Interceptor für "busy" Spinner erstellen
-.factory('busyHttpInterceptor', function ($q, $rootScope, $log) {
+.factory('busyHttpInterceptor', ['$q', '$rootScope', '$log',
+    function ($q, $rootScope, $log) {
 
-    var numLoadings = 0;
+        var numLoadings = 0;
 
-    return {
-        request: function (config) {
+        return {
+            request: function (config) {
 
-            numLoadings++;
+                numLoadings++;
 
-            // Show loader
-            $rootScope.$broadcast("loader_show");
-            return config || $q.when(config)
+                // Show loader
+                $rootScope.$broadcast("loader_show");
+                return config || $q.when(config)
 
-        },
-        response: function (response) {
+            },
+            response: function (response) {
 
-            if ((--numLoadings) === 0) {
-                // Hide loader
-                $rootScope.$broadcast("loader_hide");
+                if ((--numLoadings) === 0) {
+                    // Hide loader
+                    $rootScope.$broadcast("loader_hide");
+                }
+
+                return response || $q.when(response);
+
+            },
+            responseError: function (response) {
+
+                if (!(--numLoadings)) {
+                    // Hide loader
+                    $rootScope.$broadcast("loader_hide");
+                }
+
+                return $q.reject(response);
             }
-
-            return response || $q.when(response);
-
-        },
-        responseError: function (response) {
-
-            if (!(--numLoadings)) {
-                // Hide loader
-                $rootScope.$broadcast("loader_hide");
-            }
-
-            return $q.reject(response);
-        }
-    };
-})
-.config(function ($httpProvider) {
-    $httpProvider.interceptors.push('busyHttpInterceptor');
-})
+        };
+    }
+])
+.config(['$httpProvider',
+    function ($httpProvider) {
+        $httpProvider.interceptors.push('busyHttpInterceptor');
+    }
+])
 
 //Die Directiven für Loader_Show und Loader_hide erstellen
-.directive("loader", function ($rootScope) {
-    return function ($scope, element, attrs) {
-        $scope.$on("loader_show", function () {
-            return element.show();
-        });
-        return $scope.$on("loader_hide", function () {
-            return element.hide();
-        });
-    };
-}
-)
+.directive("loader", ['$rootScope',
+    function ($rootScope) {
+        return function ($scope, element, attrs) {
+            $scope.$on("loader_show", function () {
+                return element.show();
+            });
+            return $scope.$on("loader_hide", function () {
+                return element.hide();
+            });
+        };
+    }
+])
 
 //Directive für das automatische ausfüllen von Eingabefeldern bspw Passworten
 //Die Werte können nicht validiert werden, da OnChange nicht feuert.
 //Lösung: polyfill: https://github.com/tbosch/autofill-event
-.directive('formAutofillFix', function ($timeout) {
-    return function (scope, element, attrs) {
-        element.prop('method', 'post');
-        if (attrs.ngSubmit) {
-            $timeout(function () {
-                element
-                  .unbind('submit')
-                  .bind('submit', function (event) {
-                      event.preventDefault();
-                      element
-                        .find('input, textarea, select')
-                        .trigger('input')
-                        .trigger('change')
-                        .trigger('keydown');
-                      scope.$apply(attrs.ngSubmit);
-                  });
-            });
-        }
-    };
-})
+.directive('formAutofillFix', ['$timeout',
+    function ($timeout) {
+        return function (scope, element, attrs) {
+            element.prop('method', 'post');
+            if (attrs.ngSubmit) {
+                $timeout(function () {
+                    element
+                      .unbind('submit')
+                      .bind('submit', function (event) {
+                          event.preventDefault();
+                          element
+                            .find('input, textarea, select')
+                            .trigger('input')
+                            .trigger('change')
+                            .trigger('keydown');
+                          scope.$apply(attrs.ngSubmit);
+                      });
+                });
+            }
+        };
+    }
+])
 
-.factory('stateMonitorSvc', function ($rootScope) {
-    
-    return function($rootScope){
+
+
+
+
+
+.run(['$rootScope', '$state', '$stateParams',
+    function ($rootScope, $state, $stateParams) {
+
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+
         $rootScope.$on('$stateChangeStart',
-        function (event, toState, toParams, fromState, fromParams) {
-            console.log('changing state from', fromState.name, 'to', toState.name);
-        });
+                   function (event, toState, toParams, fromState, fromParams) {
+                       console.log('changing state from', fromState.name, 'to', toState.name);
+                   });
         $rootScope.$on('$stateChangeSuccess',
         function (event, toState, toParams, fromState, fromParams) {
             console.log('changed state from', fromState.name, 'to', toState.name);
@@ -144,18 +161,11 @@ var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'ngGrid', 'angular
             console.log(error, 'changing state from',
             fromState.name, 'to', toState.name);
         });
+
+
+
     }
-
-})
-
-
-.run(function ($rootScope, $state, $stateParams) {
-
-    $rootScope.$state = $state;
-    $rootScope.$stateParams = $stateParams;
-
-    
-});
+]);
 
 
 

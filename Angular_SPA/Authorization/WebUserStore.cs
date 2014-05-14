@@ -39,7 +39,8 @@ namespace Angular_SPA.Authorization {
       }
 
       public Task UpdateAsync(WebUser user) {
-         throw new NotImplementedException();
+         //Datenbankzugriff
+         return Task.FromResult(0);
       }
 
       public Task DeleteAsync(WebUser user) {
@@ -49,23 +50,29 @@ namespace Angular_SPA.Authorization {
 
       public Task<WebUser> FindByIdAsync(string userId) {
          //Nur als Dummy, um etwas zurückzuliefern:
-         return FindByNameAsync(userId);
+         var user = GetDummy();
+         return Task<WebUser>.FromResult(user);
       }
 
-      public Task<WebUser> FindByNameAsync(string userName) {
-
-
+      private WebUser GetDummy() {
          string pw = "password123";
          MD5CryptoServiceProvider HashMD5 = new MD5CryptoServiceProvider();
          pw = Convert.ToBase64String(HashMD5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(pw)));
 
          WebUser user = new WebUser() {
-            UserName = userName,
-            //Email = "m.oehmichen@sozialbank.de",
-            Email = "markus@oehmie.de",
+            Id = "1234567",
+            UserName = "alice01",
+            Email = "m.oehmichen@sozialbank.de",
+            //Email = "markus@oehmie.de",
             EmailConfirmed = true,
             PasswordHash = pw
          };
+         return user;
+      }
+
+      public Task<WebUser> FindByNameAsync(string userName) {
+
+         var user = GetDummy();
          return Task<WebUser>.FromResult(user);
 
          //Task<WebUser> task = context.AppUsers.Where(
@@ -89,7 +96,7 @@ namespace Angular_SPA.Authorization {
       }
 
       public Task SetPasswordHashAsync(WebUser user, string passwordHash) {
-         throw new NotImplementedException();
+         return Task.FromResult(0);
       }
 
       public Task<bool> HasPasswordAsync(WebUser user) {
@@ -102,7 +109,8 @@ namespace Angular_SPA.Authorization {
       public Task<WebUser> FindByEmailAsync(string email) {
 
          //Nur als Dummy, um etwas zurückzuliefern:
-         return FindByNameAsync(email);
+         var user = GetDummy();
+         return Task<WebUser>.FromResult(user);
       }
 
 

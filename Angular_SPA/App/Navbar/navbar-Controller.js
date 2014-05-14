@@ -1,5 +1,7 @@
-﻿app.controller('navbarController', function ($scope, $location, authService) {
-    'use strict';
+﻿'use strict';
+app.controller('navbarController',['$scope', '$location', 'authService',
+    function ($scope, $location, authService) {
+    
 
 
     $scope.logout = function () {
@@ -24,4 +26,4 @@
 
 
     }
-);
+]);

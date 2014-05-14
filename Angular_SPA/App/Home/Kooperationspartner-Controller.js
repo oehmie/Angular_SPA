@@ -1,6 +1,6 @@
 ﻿
 
-app.controller('kooperationspartnerController',
+app.controller('kooperationspartnerController',['$scope', '$http', '$q', '$stateParams', '$state', 'kooperationspartnerService',
     function ($scope, $http, $q, $stateParams, $state, kooperationspartnerService) {
         'use strict';
 
@@ -126,4 +126,5 @@ app.controller('kooperationspartnerController',
 
 
 
-    });
+    }
+]);

@@ -1,4 +1,4 @@
-﻿app.controller("passwortvergessenController",
+﻿app.controller("passwortvergessenController", ['$scope', '$http', '$q', '$stateParams', '$state', '$location', '$modal', 'authService',
     function ($scope, $http, $q, $stateParams, $state, $location, $modal, authService) {
 
         $scope.title = "Passwort vergessen";
@@ -8,7 +8,7 @@
 
         $scope.email = '';
 
-        $scope.responsemessage = '';
+        $scope.dialogmessage = '';
 
         $scope.passwortvergessen = function (form) {
             if (!form.$valid)
@@ -16,7 +16,7 @@
             $scope.hasErrors = false;
             authService.forgotPassword($scope.email)
             .then(function (data) {
-                $scope.responsemessage = data.message;
+                $scope.dialogmessage = data.message;
 
                 $scope.openDialog();
 
@@ -36,13 +36,13 @@
         //Dialog anzeigen
         $scope.openDialog = function () {
             var modalInstance = $modal.open({
-                templateUrl: 'myModalContent.html',
-                controller: ModalInstanceCtrl,
+                templateUrl: 'passwordvergessenModal.html',
+                controller: passwordvergessenModalInstanceCtrl,
                 windowClass: 'modal fade in',
                 size: 'sm',
                 resolve: {
                     text: function () {
-                        return $scope.responsemessage;
+                        return $scope.dialogmessage;
                     }
                 }
             });
@@ -57,13 +57,14 @@
             );
         };
 
-    });
+    }
+]);
 
 
 //Controller für das Dialogfenster
-var ModalInstanceCtrl = function ($scope, $modalInstance, text) {
+var passwordvergessenModalInstanceCtrl = function ($scope, $modalInstance, text) {
 
-    $scope.title = 'Dialogtitel';
+    $scope.title = 'Passwort vergessen';
     $scope.text = text;
 
     $scope.ok = function () {

@@ -1,4 +1,4 @@
-﻿app.controller("loginController",
+﻿app.controller("loginController", ['$scope', '$http', '$q', '$stateParams', '$state', '$location', 'authService',
     function ($scope, $http, $q, $stateParams, $state, $location, authService) {
 
         $scope.title = "Benutzeranmeldung";
@@ -19,7 +19,7 @@
                 //Weiterleitung auf die gewünschte Seite
                 var redirect = $location.search();
                 if (redirect.returnTo)
-                   $location.path(redirect.returnTo);
+                    $location.path(redirect.returnTo);
             }, function (error) {
                 // error handling here
                 $scope.hasErrors = true;
@@ -32,4 +32,5 @@
             });
         };
 
-    });
+    }
+]);

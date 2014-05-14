@@ -29,11 +29,11 @@ namespace Angular_SPA.Models {
       [Required]
       [StringLength(100, ErrorMessage = "Das {0} muss mindestens {2} Zeichen lang sein.", MinimumLength = 6)]
       [DataType(DataType.Password)]
-      [Display(Name = "Password")]
+      [Display(Name = "Passwort")]
       public string Password { get; set; }
 
       [DataType(DataType.Password)]
-      [Display(Name = "Confirm password")]
+      [Display(Name = "Passwortbestätigung")]
       [Compare("Password", ErrorMessage = "Das Kennwort stimmt nicht mit dem Bestätigungskennwort überein")]
       public string ConfirmPassword { get; set; }
 

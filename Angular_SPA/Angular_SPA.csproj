@@ -170,7 +170,6 @@
     <Content Include="App\Navbar\navbar-Controller.js" />
     <Content Include="App\Search\Results.html" />
     <Content Include="App\Search\Results.js" />
-    <Content Include="App\Secure\auth-Controller.js" />
     <Content Include="App\Secure\auth-Interceptor.js" />
     <Content Include="App\Secure\auth-Service.js" />
     <Content Include="App\Secure\Login-Controller.js" />

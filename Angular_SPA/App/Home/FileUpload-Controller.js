@@ -1,6 +1,6 @@
 
 // The example of the full functionality
-app.controller('fileuploadController',
+app.controller('fileuploadController',['$scope', '$fileUploader',
     function ($scope, $fileUploader) {
         'use strict';
 
@@ -92,4 +92,5 @@ app.controller('fileuploadController',
             console.info('Complete all', items);
         });
 
-    });
+    }
+]);
