@@ -42,7 +42,7 @@
                    $scope.errorText = error.error_description;
                }
                else {
-                   $scope.errorText = angular.fromJson(error);
+                   $scope.errorText = JSON.stringify(error);
                }
            });
        };

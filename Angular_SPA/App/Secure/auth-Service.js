@@ -104,6 +104,7 @@ app.factory('authService', ['$http', '$q','$window',
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
                 data: 'email=' + email + '&password=' + password + '&confirmpassword=' + passwordconfirmation + '&code=' + code,
+                //data: { Code: code, Email: email, Password: password, ConfirmPassword: passwordconfirmation },
             }).
             success(function (data, status, headers, config) {
                 deferred.resolve(data)

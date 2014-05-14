@@ -492,6 +492,14 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\ng-grid.js" />
     <Content Include="Scripts\ng-grid.min.js" />
+    <Content Include="Scripts\typings\angularjs\angular-animate.d.ts" />
+    <Content Include="Scripts\typings\angularjs\angular-cookies.d.ts" />
+    <Content Include="Scripts\typings\angularjs\angular-mocks.d.ts" />
+    <Content Include="Scripts\typings\angularjs\angular-resource.d.ts" />
+    <Content Include="Scripts\typings\angularjs\angular-route.d.ts" />
+    <Content Include="Scripts\typings\angularjs\angular-sanitize.d.ts" />
+    <Content Include="Scripts\typings\angularjs\angular-scenario.d.ts" />
+    <Content Include="Scripts\typings\angularjs\angular.d.ts" />
     <Content Include="Scripts\typings\jquery\jquery.d.ts" />
     <Content Include="Scripts\typings\ng-grid\ng-grid.d.ts" />
     <Content Include="Views\Main\formpost.html" />

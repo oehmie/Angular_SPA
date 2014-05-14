@@ -67,7 +67,7 @@ namespace Angular_SPA.Models {
 
 			var dataProtectionProvider = options.DataProtectionProvider;
 			if (dataProtectionProvider != null) {
-				manager.UserTokenProvider = new DataProtectorTokenProvider<WebUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+				manager.UserTokenProvider = new DataProtectorTokenProvider<WebUser>(dataProtectionProvider.Create("ASP.NET Identity")) {TokenLifespan = TimeSpan.FromHours(2)};
 			}
 			return manager;
 		}
